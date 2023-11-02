@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// アプリ用
+Route::resource('applications', ApplicationController::class)
+->middleware(['auth:users']);
+
+// アプリ用
+
 
 Route::get('/', function () {
     return view('user.welcome');
