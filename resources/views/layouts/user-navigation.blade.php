@@ -69,7 +69,7 @@
             <x-responsive-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
+            <x-nav-link :href="route('user.applications.index')" :active="request()->routeIs('user.applications.index')">
                 申請書一覧
             </x-responsive-nav-link>
         </div>

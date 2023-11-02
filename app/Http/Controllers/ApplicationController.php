@@ -26,9 +26,6 @@ class ApplicationController extends Controller
     {
         $user = Auth::user()->id;
         $applications = Application::where('user_id', $user)->get();
-
-        // dd($user, $applications);
-
         return view('applications.index', compact('user', 'applications'));
     }
 
@@ -39,7 +36,8 @@ class ApplicationController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user()->id;
+        return view('applications.create', compact('user'));
     }
 
     /**
