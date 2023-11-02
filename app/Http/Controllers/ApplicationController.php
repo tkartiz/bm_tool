@@ -26,7 +26,7 @@ class ApplicationController extends Controller
     {
         $user = Auth::user()->id;
         $applications = Application::where('user_id', $user)->get();
-        return view('applications.index', compact('user', 'applications'));
+        return view('applications.index', compact('applications'));
     }
 
     /**
@@ -36,7 +36,7 @@ class ApplicationController extends Controller
      */
     public function create()
     {
-        $user = Auth::user()->id;
+        $user = Auth::user();
         return view('applications.create', compact('user'));
     }
 
@@ -48,7 +48,21 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'user_id' => 'required|integer',
+            'subject' => 'required|string|max:50',
+            'severity' => 'required|string',
+            'desired_dlvd_at' => 'required|date',
+        ]);
+
+        Application::create([
+            'user_id' => $request->user_id,
+            'subject' => $request->subject,
+            'severity' => $request->severity,
+            'desired_dlvd_at' => $request->desired_dlvd_at,
+        ]);
+
+        return redirect()->route('user.applications.index');
     }
 
     /**

@@ -4,8 +4,145 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de903153bd733db8b18ffc0fd95c87ac",
+    "content-hash": "d73c759fc14a9a8a0bf579d6c9558a47",
     "packages": [
+        {
+            "name": "arcanedev/laravel-lang",
+            "version": "9.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ARCANEDEV/LaravelLang.git",
+                "reference": "a9a8cda73afbc49331d4d135c36f484196d9b1c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ARCANEDEV/LaravelLang/zipball/a9a8cda73afbc49331d4d135c36f484196d9b1c8",
+                "reference": "a9a8cda73afbc49331d4d135c36f484196d9b1c8",
+                "shasum": ""
+            },
+            "require": {
+                "arcanedev/support": "^8.0",
+                "laravel-lang/lang": "^9.0",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "laravel/framework": "^8.40",
+                "mockery/mockery": "^1.4.2",
+                "orchestra/testbench-core": "^6.4",
+                "phpunit/phpunit": "^9.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "9.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Arcanedev\\LaravelLang\\LaravelLangServiceProvider",
+                        "Arcanedev\\LaravelLang\\Providers\\DeferredServicesProvider",
+                        "Arcanedev\\LaravelLang\\Providers\\TranslationServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Arcanedev\\LaravelLang\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ARCANEDEV",
+                    "email": "arcanedev.maroc@gmail.com",
+                    "homepage": "https://github.com/arcanedev-maroc",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Translations manager and checker for Laravel based on 'caouecs/laravel-lang' package.",
+            "homepage": "https://github.com/ARCANEDEV/LaravelLang",
+            "keywords": [
+                "arcanedev",
+                "lang",
+                "languages",
+                "laravel",
+                "localisation",
+                "localization",
+                "trans",
+                "translations",
+                "validations"
+            ],
+            "support": {
+                "issues": "https://github.com/ARCANEDEV/LaravelLang/issues",
+                "source": "https://github.com/ARCANEDEV/LaravelLang/tree/9.1.0"
+            },
+            "time": "2021-05-07T22:06:29+00:00"
+        },
+        {
+            "name": "arcanedev/support",
+            "version": "8.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ARCANEDEV/Support.git",
+                "reference": "f401e1a859fe4e84331986d18ee0313e37e89810"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ARCANEDEV/Support/zipball/f401e1a859fe4e84331986d18ee0313e37e89810",
+                "reference": "f401e1a859fe4e84331986d18ee0313e37e89810",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^8.0",
+                "illuminate/support": "^8.0",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "laravel/framework": "^8.19",
+                "orchestra/testbench-core": "^6.4",
+                "phpunit/phpunit": "^9.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "8.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "helpers.php"
+                ],
+                "psr-4": {
+                    "Arcanedev\\Support\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ARCANEDEV",
+                    "email": "arcanedev.maroc@gmail.com",
+                    "homepage": "https://github.com/arcanedev-maroc"
+                }
+            ],
+            "description": "ARCANEDEV Support Helpers",
+            "homepage": "https://github.com/ARCANEDEV/Support",
+            "keywords": [
+                "arcanedev",
+                "arcanesoft",
+                "laravel",
+                "support"
+            ],
+            "support": {
+                "issues": "https://github.com/ARCANEDEV/Support/issues",
+                "source": "https://github.com/ARCANEDEV/Support/tree/8.1.1"
+            },
+            "time": "2023-10-06T13:53:11+00:00"
+        },
         {
             "name": "asm89/stack-cors",
             "version": "v2.1.1",
@@ -1038,6 +1175,61 @@
                 }
             ],
             "time": "2023-08-27T10:13:57+00:00"
+        },
+        {
+            "name": "laravel-lang/lang",
+            "version": "9.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Laravel-Lang/lang.git",
+                "reference": "8c5cc7a493af27e175a9f1b7f5c2242bb9faec87"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Laravel-Lang/lang/zipball/8c5cc7a493af27e175a9f1b7f5c2242bb9faec87",
+                "reference": "8c5cc7a493af27e175a9f1b7f5c2242bb9faec87",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*"
+            },
+            "require-dev": {
+                "andrey-helldar/pretty-array": "^2.3",
+                "andrey-helldar/support": "^3.6",
+                "guzzlehttp/guzzle": "^7.3",
+                "php": "^8.0",
+                "phpunit/phpunit": "^9.5",
+                "symfony/var-dumper": "^5.2",
+                "vlucas/phpdotenv": "^5.3"
+            },
+            "suggest": {
+                "andrey-helldar/laravel-lang-publisher": "Easy installation and update of translation files for your project",
+                "arcanedev/laravel-lang": "Translations manager and checker for Laravel 5",
+                "overtrue/laravel-lang": "Command to add languages in your project"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Laravel-Lang Team",
+                    "homepage": "https://github.com/Laravel-Lang"
+                }
+            ],
+            "description": "Languages for Laravel",
+            "keywords": [
+                "lang",
+                "languages",
+                "laravel",
+                "lpm"
+            ],
+            "support": {
+                "issues": "https://github.com/Laravel-Lang/lang/issues",
+                "source": "https://github.com/Laravel-Lang/lang"
+            },
+            "time": "2021-05-14T21:25:59+00:00"
         },
         {
             "name": "laravel/framework",

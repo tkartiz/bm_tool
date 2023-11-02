@@ -13,23 +13,24 @@
                         <!-- 依頼者情報 -->
                         <div class="px-5 py-2 bg-white mb-5">
                             <div class="p-2 w-full flex flex-wrap text-sm text-gray-600">
-                                <p class="w-1/3">申請書番号：</p>
-                                <p class="w-1/3">依頼者：</p>
+                                <p class="w-1/3">申請書番号：作成後取得</p>
+                                <p class="w-1/3">依頼者：{{ $user->name }}</p>
                                 <p class="w-1/3">
-                                    所属：
+                                    所属：{{ $user->affiliation }}
                                 </p>
                             </div>
                         </div>
 
                         <!-- 申請内容 -->
-                        <BreezeValidationErrors :errors="errors" />
-                        <form>
-                            <!-- <input type="integer" id="user_id" name="user_id" v-bind:value="user.id" class="hidden" />
+                        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+                        <form method="POST" action="{{ route('user.applications.store') }}">
+                            @csrf
+                            <input type="hidden" id="user_id" name="user_id" value="{{ $user->id }}">
                             <div class="p-3 flex bg-white">
                                 <div class="p-2 w-2/6">
                                     <div class="relative">
                                         <label for="subject" class="leading-7 text-sm text-gray-600">品名</label>
-                                        <input type="text" id="subject" v-model="form.subject" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                        <input type="text" id="subject" name="subject" value="{{ old('subject') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                     </div>
                                 </div>
                                 <div class="p-2 w-1/6">
@@ -39,7 +40,7 @@
                                 <div class="p-2 w-1/6">
                                     <div class="relative">
                                         <label for="desired_dlvd_at" class="leading-7 text-sm text-gray-600">希望納期</label>
-                                        <input type="date" id="desired_dlvd_at" v-model="form.desired_dlvd_at" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                        <input type="date" id="desired_dlvd_at" name="desired_dlvd_at" value="{{ old('desired_dlvd_at') }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                     </div>
                                 </div>
                                 <div class="p-2 w-1/6">
@@ -49,7 +50,7 @@
                                 <div class="p-2 w-1/6">
                                     <div class="relative">
                                         <label for="severity" class="leading-7 text-sm text-gray-600">緊急度</label>
-                                        <select id="severity" v-model="form.severity" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <select id="severity" name="severity" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                             <option disabled value="">選択してください</option>
                                             <option value="通常">通常</option>
                                             <option value="急ぎ">急ぎ</option>
@@ -57,14 +58,14 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                             <div class="w-full flex mx-auto my-10">
                                 <button type="submit" class="w-1/2 p-2 text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-l-xl">
                                     申請書を作成する
                                 </button>
-                                <button onclick="location.href=''" class="w-1/2 p-2 btn text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-r-xl">
-                                戻る
-                                </button>
+                                <a href="{{ route('user.applications.index') }}" class="w-1/2 p-2 btn text-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-r-xl">
+                                    戻る
+                                </a>
                             </div>
                         </form>
                     </section>

@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="w-1/6 ms-auto px-5 mt-4">
                     <a href="{{ route('user.applications.create') }}" class="w-full btn p-2 text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-xl">
-                    申請書の新規登録</a>
+                        申請書の新規登録</a>
                 </div>
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <section class="text-gray-600 body-font">
@@ -45,15 +45,15 @@
                                         <tr>
                                             @if($application->applicated_at == null)
                                             <td class="px-2 py-3">
-                                                <Link class="w-full text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-xl" as="button" :href="route('applications.show', { application: application.id })">
-                                                詳細
-                                                </Link>
+                                                <a href="" class="w-full py-1 px-2 btn text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-xl">
+                                                    詳細
+                                                </a>
                                             </td>
                                             @else
                                             <td class="px-2 py-3 bg-gray-100">
-                                                <Link class="w-full text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-xl" as="button" :href="route('contacts.create', { application: application.id })">
-                                                問合せ
-                                                </Link>
+                                                <a href="" class="w-full py-1 px-2 btn text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-xl">
+                                                    問合せ
+                                                </a>
                                             </td>
                                             @endif
 
