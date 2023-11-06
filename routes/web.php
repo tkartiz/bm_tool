@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\WorkspecController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,9 @@ use App\Http\Controllers\ApplicationController;
 
 // アプリ用
 Route::resource('applications', ApplicationController::class)
+->middleware(['auth:users']);
+
+Route::resource('workspecs', WorkspecController::class)
 ->middleware(['auth:users']);
 
 // アプリ用

@@ -29,7 +29,7 @@ module.exports = {
         iconsPlugin({
             // 利用したい icon collection を利用する
             // https://icones.js.org/
-            collections: getIconCollections(["fa6-regular"]),
+            collections: getIconCollections(["fa6-regular", "fa6-solid"]),
         }),
     ],
 

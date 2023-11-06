@@ -8,9 +8,9 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="w-1/6 ms-auto px-5 mt-4">
-                    <a href="{{ route('user.applications.create') }}" class="w-full btn p-2 text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-xl">
-                        申請書の新規作成</a>
+                <div class="w-40 ms-auto flex px-5 mt-4">
+                    <a href="{{ route('user.applications.create') }}" class="w-full btn p-2 text-center text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-xl">
+                        新規作成</a>
                 </div>
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <section class="text-gray-600 body-font">
@@ -33,6 +33,8 @@
                                             <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 制作点数</th>
                                             <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                制作一覧</th>
+                                            <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 緊急度</th>
                                             <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 申請日</th>
@@ -51,7 +53,7 @@
                                             <td class="px-2 py-3">
                                                 <form id="delete_{{ $application->id }}" method="post" action="{{ route('user.applications.destroy', $application->id) }}">
                                                     @csrf
-                                                    @method('delete')
+                                                    @method('put')
                                                     <a href="#" data-id="{{ $application->id }}" onclick="deletePost(this)" class="w-full p-1 text-center">
                                                         <span class="i-fa6-regular-trash-can bg-red-500 w-5 h-5"></span>
                                                     </a>
@@ -63,16 +65,25 @@
                                                 </a>
                                             </td>
                                             <td class="px-2 py-3">
-                                                <a href="{{ route('user.applications.edit', $application->id) }}" class="w-full p-1 text-center">
-                                                    <span class="i-fa6-regular-envelope bg-black-500 w-5 h-5"></span>
-                                                </a>
+                                                <form id="applicate_{{ $application->id }}" method="POST" action="{{ route('user.applications.update', $application->id) }}">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <a href="#" data-id="{{ $application->id }}" onclick="applicatePost(this)" class="w-full p-1 text-center">
+                                                        <span class="i-fa6-regular-envelope bg-black-500 w-5 h-5"></span>
+                                                    </a>
+                                                    <input type="hidden" name="user_id" value="{{ $user }}">
+                                                    <input type="hidden" name="subject" value="{{ $application->subject }}">
+                                                    <input type="hidden" name="severity" value="{{ $application->severity }}">
+                                                    <input type="hidden" name="desired_dlvd_at" value="{{ $application->desired_dlvd_at }}">
+                                                    <input type="hidden" name="check" value="true">
+                                                </form>
                                             </td>
                                             @else
                                             <td class="px-2 py-3 bg-gray-100"></td>
                                             <td class="px-2 py-3 bg-gray-100"></td>
                                             <td class="px-2 py-3 bg-gray-100">
-                                                <a href="" class="w-full py-1 px-2 btn text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-xl">
-                                                    問合せ
+                                                <a href="" class="w-full p-1 text-center">
+                                                    <span class="i-fa6-solid-envelope bg-green-500 w-5 h-5 -mb-3"></span><br><small>問合せ</small>
                                                 </a>
                                             </td>
                                             @endif
@@ -81,6 +92,11 @@
                                             <td class="px-2 py-3">{{ $application->id }}</td>
                                             <td class="px-2 py-3 text-start">{{ $application->subject }}</td>
                                             <td class="px-2 py-3">{{ $application->works_quantity }}</td>
+                                            <td class="px-2 py-3">
+                                                <a href="{{ route('user.workspecs.index', ['application'=>$application->id]) }}" class="w-full p-1 text-center">
+                                                    <span class="i-fa6-regular-rectangle-list bg-black-500 w-5 h-5"></span>
+                                                </a>
+                                            </td>
                                             <td class="px-2 py-3">{{ $application->severity }}</td>
                                             <td class="px-2 py-3">{{ $application->applicated_at }}</td>
                                             <td class="px-2 py-3">{{ $application->desired_dlvd_at }}</td>
@@ -114,6 +130,13 @@
             'use strict';
             if (confirm('本当に削除してもいいですか？')) {
                 document.getElementById('delete_' + e.dataset.id).submit();
+            }
+        }
+
+        function applicatePost(e) {
+            'use strict';
+            if (confirm('本当に申請してもいいですか？')) {
+                document.getElementById('applicate_' + e.dataset.id).submit();
             }
         }
     </script>

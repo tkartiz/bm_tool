@@ -24,8 +24,8 @@
                         <!-- 申請内容 -->
                         <x-auth-validation-errors class="mb-4" :errors="$errors" />
                         <form method="POST" action="{{ route('user.applications.update', ['application' => $application->id]) }}">
-                            @method('PUT')
                             @csrf
+                            @method('PUT')
                             <input type="hidden" id="user_id" name="user_id" value="{{ $user->id }}">
                             <div class="p-3 flex bg-white">
                                 <div class="p-2 w-2/6">
@@ -66,7 +66,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="w-full flex mx-auto my-10">
+                            <div class="w-3/4 flex mx-auto my-10">
                                 <button type="submit" class="w-1/2 p-2 text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-l-xl">
                                     更新する
                                 </button>

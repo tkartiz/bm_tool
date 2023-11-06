@@ -26,7 +26,7 @@ class ApplicationController extends Controller
     {
         $user = Auth::user()->id;
         $applications = Application::where('user_id', $user)->get();
-        return view('applications.index', compact('applications'));
+        return view('applications.index', compact('user', 'applications'));
     }
 
     /**
@@ -105,12 +105,13 @@ class ApplicationController extends Controller
         $application->subject = $request->subject;
         $application->works_quantity = $request->works_quantity;
         $application->severity = $request->severity;
-        if($request->check === true){
+        if($request->check === "true"){
             $application->applicated_at = date("Y-m-d");
         } else {
             $application->applicated_at = null;
         }
         $application->desired_dlvd_at = $request->desired_dlvd_at;
+        
         $application->save();
 
         return redirect()
