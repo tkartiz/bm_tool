@@ -62,7 +62,9 @@ class ApplicationController extends Controller
             'desired_dlvd_at' => $request->desired_dlvd_at,
         ]);
 
-        return redirect()->route('user.applications.index');
+        return redirect()
+        ->route('user.applications.index')
+        ->with(['message'=>'申請書を作成しました。', 'status'=>'info']);
     }
 
     /**
@@ -73,7 +75,9 @@ class ApplicationController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = Auth::user();
+        $application = Application::findOrFail($id);
+        return view('applications.show', compact('user', 'application'));
     }
 
     /**
@@ -84,7 +88,9 @@ class ApplicationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $application = Application::findOrFail($id);
+        return view('applications.edit', compact('user', 'application'));
     }
 
     /**
@@ -96,7 +102,22 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $application = Application::findOrFail($id);
+        $application->user_id = $request->user_id;
+        $application->subject = $request->subject;
+        $application->works_quantity = $request->works_quantity;
+        $application->severity = $request->severity;
+        if($request->check === true){
+            $application->applicated_at = date("Y-m-d");
+        } else {
+            $application->applicated_at = null;
+        }
+        $application->desired_dlvd_at = $request->desired_dlvd_at;
+        $application->save();
+
+        return redirect()
+        ->route('user.applications.show', $id)
+        ->with(['message'=>'申請書を更新しました。', 'status'=>'info']);
     }
 
     /**
@@ -107,6 +128,9 @@ class ApplicationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Application::findOrFail($id)->delete(); //ソフトデリート
+        return redirect()
+        ->route('user.applications.index')
+        ->with(['message'=>'申請書を削除しました。', 'status'=>'alert']);
     }
 }

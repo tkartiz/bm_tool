@@ -15,7 +15,7 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <section class="text-gray-600 body-font">
                         <div class="container px-5 py-8 mx-auto">
-                            <FlashMessage />
+                            <x-flash-message status="session('status')" />
                             <div class="w-full mx-auto overflow-auto">
                                 <table class="table-auto w-full text-center whitespace-no-wrap">
                                     <thead>
@@ -45,7 +45,7 @@
                                         <tr>
                                             @if($application->applicated_at == null)
                                             <td class="px-2 py-3">
-                                                <a href="" class="w-full py-1 px-2 btn text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-xl">
+                                                <a href={{ route('user.applications.show', $application->id) }} class="w-full py-1 px-2 btn text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-xl">
                                                     詳細
                                                 </a>
                                             </td>
