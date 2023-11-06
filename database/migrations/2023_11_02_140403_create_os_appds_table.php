@@ -34,6 +34,7 @@ class CreateOsAppdsTable extends Migration
             $table->date('appd2_appd_at')->nullable();
             $table->date('requested_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

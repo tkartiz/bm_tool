@@ -24,6 +24,7 @@ class CreateWorkspecsTable extends Migration
             $table->integer('quantity');
             $table->string('unit');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

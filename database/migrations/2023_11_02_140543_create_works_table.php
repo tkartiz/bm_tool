@@ -25,6 +25,7 @@ class CreateWorksTable extends Migration
             $table->integer('price_exc')->nullable();
             $table->string('message')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

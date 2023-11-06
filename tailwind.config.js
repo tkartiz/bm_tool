@@ -1,5 +1,12 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
+// tailswindアイコン追加
+const {
+    iconsPlugin,
+    getIconCollections,
+} = require("@egoist/tailwindcss-icons");
+// tailswindアイコン追加
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
@@ -16,7 +23,15 @@ module.exports = {
         },
     },
 
-    plugins: [require('@tailwindcss/forms')],
+    plugins: [
+        require('@tailwindcss/forms'),
+
+        iconsPlugin({
+            // 利用したい icon collection を利用する
+            // https://icones.js.org/
+            collections: getIconCollections(["fa6-regular"]),
+        }),
+    ],
 
     //ここから追加
     purge: [

@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="w-1/6 ms-auto px-5 mt-4">
                     <a href="{{ route('user.applications.create') }}" class="w-full btn p-2 text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-xl">
-                        申請書の新規登録</a>
+                        申請書の新規作成</a>
                 </div>
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <section class="text-gray-600 body-font">
@@ -21,7 +21,11 @@
                                     <thead>
                                         <tr>
                                             <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                詳細</th>
+                                                削除</th>
+                                            <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                編集</th>
+                                            <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                申請</th>
                                             <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 申請書番号</th>
                                             <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
@@ -45,11 +49,27 @@
                                         <tr>
                                             @if($application->applicated_at == null)
                                             <td class="px-2 py-3">
-                                                <a href={{ route('user.applications.show', $application->id) }} class="w-full py-1 px-2 btn text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-xl">
-                                                    詳細
+                                                <form id="delete_{{ $application->id }}" method="post" action="{{ route('user.applications.destroy', $application->id) }}">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <a href="#" data-id="{{ $application->id }}" onclick="deletePost(this)" class="w-full p-1 text-center">
+                                                        <span class="i-fa6-regular-trash-can bg-red-500 w-5 h-5"></span>
+                                                    </a>
+                                                </form>
+                                            </td>
+                                            <td class="px-2 py-3">
+                                                <a href="{{ route('user.applications.edit', $application->id) }}" class="w-full p-1 text-center">
+                                                    <span class="i-fa6-regular-pen-to-square bg-blue-500 w-5 h-5"></span>
+                                                </a>
+                                            </td>
+                                            <td class="px-2 py-3">
+                                                <a href="{{ route('user.applications.edit', $application->id) }}" class="w-full p-1 text-center">
+                                                    <span class="i-fa6-regular-envelope bg-black-500 w-5 h-5"></span>
                                                 </a>
                                             </td>
                                             @else
+                                            <td class="px-2 py-3 bg-gray-100"></td>
+                                            <td class="px-2 py-3 bg-gray-100"></td>
                                             <td class="px-2 py-3 bg-gray-100">
                                                 <a href="" class="w-full py-1 px-2 btn text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-xl">
                                                     問合せ
@@ -89,4 +109,12 @@
             </div>
         </div>
     </div>
+    <script>
+        function deletePost(e) {
+            'use strict';
+            if (confirm('本当に削除してもいいですか？')) {
+                document.getElementById('delete_' + e.dataset.id).submit();
+            }
+        }
+    </script>
 </x-app-layout>

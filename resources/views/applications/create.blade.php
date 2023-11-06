@@ -61,7 +61,7 @@
                             </div>
                             <div class="w-full flex mx-auto my-10">
                                 <button type="submit" class="w-1/2 p-2 text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-l-xl">
-                                    申請書を作成する
+                                    作成する
                                 </button>
                                 <a href="{{ route('user.applications.index') }}" class="w-1/2 p-2 btn text-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-r-xl">
                                     戻る

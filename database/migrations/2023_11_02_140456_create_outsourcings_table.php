@@ -24,6 +24,7 @@ class CreateOutsourcingsTable extends Migration
             $table->string('comp_file2')->nullable();
             $table->string('comp_file3')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

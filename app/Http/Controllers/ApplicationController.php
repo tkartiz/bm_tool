@@ -75,9 +75,7 @@ class ApplicationController extends Controller
      */
     public function show($id)
     {
-        $user = Auth::user();
-        $application = Application::findOrFail($id);
-        return view('applications.show', compact('user', 'application'));
+        //
     }
 
     /**
@@ -116,7 +114,7 @@ class ApplicationController extends Controller
         $application->save();
 
         return redirect()
-        ->route('user.applications.show', $id)
+        ->route('user.applications.index', $id)
         ->with(['message'=>'申請書を更新しました。', 'status'=>'info']);
     }
 
