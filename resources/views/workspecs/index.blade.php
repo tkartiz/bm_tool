@@ -73,20 +73,20 @@
                                                 <form id="delete_{{ $workspec->id }}" method="post" action="{{ route('user.workspecs.destroy', $workspec->id) }}">
                                                     @csrf
                                                     @method('put')
-                                                    <a href="#" data-id="{{ $workspec->id }}" onclick="deletePost(this)" class="w-full p-1 text-center">
+                                                    <a href="#" data-id="{{ $workspec->id }}" onclick="deleteWorkspec(this)" class="w-full p-1 text-center">
                                                         <span class="i-fa6-regular-trash-can bg-red-500 w-5 h-5"></span>
                                                     </a>
                                                 </form>
                                             </td>
                                             <td class="px-2 py-3">
-                                                <a href="{{ route('user.applications.edit', $application->id) }}" class="w-full p-1 text-center">
+                                                <a href="{{ route('user.workspecs.edit', $workspec->id) }}" class="w-full p-1 text-center">
                                                     <span class="i-fa6-regular-pen-to-square bg-blue-500 w-5 h-5"></span>
                                                 </a>
                                             </td>
                                             <td class="px-2 py-3">
-                                                <Link class="text-blue-400" :href="route('workspecs.show', { workspec: $workspec->id })">
-                                                {{ $workspec->id }}
-                                                </Link>
+                                                <a class="text-blue-400" href="{{ route('user.workspecs.show', $workspec->id) }}">
+                                                    {{ $workspec->id }}
+                                                </a>
                                             </td>
                                             <td class="px-2 py-3">{{ $workspec->size }}</td>
                                             <td class="px-2 py-3">{{ $workspec->format }}</td>
@@ -118,18 +118,11 @@
         </div>
     </div>
     <script>
-        // function deletePost(e) {
-        //     'use strict';
-        //     if (confirm('本当に削除してもいいですか？')) {
-        //         document.getElementById('delete_' + e.dataset.id).submit();
-        //     }
-        // }
-
-        // function applicatePost(e) {
-        //     'use strict';
-        //     if (confirm('本当に申請してもいいですか？')) {
-        //         document.getElementById('applicate_' + e.dataset.id).submit();
-        //     }
-        // }
+        function deleteWorkspec(e) {
+            'use strict';
+            if (confirm('本当に削除してもいいですか？')) {
+                document.getElementById('delete_' + e.dataset.id).submit();
+            }
+        }
     </script>
 </x-app-layout>

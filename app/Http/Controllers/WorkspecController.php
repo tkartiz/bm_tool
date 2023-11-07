@@ -9,6 +9,7 @@ use App\Models\Application;
 use App\Models\Workspec;
 use App\Models\Work;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class WorkspecController extends Controller
 {
@@ -48,14 +49,13 @@ class WorkspecController extends Controller
     public function store(Request $request)
     {
         // 選択されたファイル情報よりファイルをアップロードしてパスを保存する
-        if ($request->file) {
+        if (!is_null($request->file)) {
             $directory = 'public/application/' . $request->application_id;
             Storage::makeDirectory($directory);
             $file_name = $request->file('file')->getClientOriginalName();
             $request->file('file')->storeAs($directory, $file_name);
             $request->file = $file_name;
         }
-
         $workspec = Workspec::create([
             'application_id' => $request->application_id,
             'size' => $request->size,
@@ -99,7 +99,7 @@ class WorkspecController extends Controller
      */
     public function show($id)
     {
-        //
+        dd('制作物内容参照画面です');
     }
 
     /**
@@ -110,7 +110,10 @@ class WorkspecController extends Controller
      */
     public function edit($id)
     {
-        //
+        $workspec = Workspec::findOrFail($id);
+        $application = Application::where('id','=', $workspec->application_id)->first();
+        $user = Auth::user();
+        return view('workspecs.edit', compact('user', 'application', 'workspec'));
     }
 
     /**
@@ -122,7 +125,40 @@ class WorkspecController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $workspec = Workspec::findOrFail($id);
+        $workspec->size = $request->size;
+        $workspec->format = $request->format;
+        $workspec->article = $request->article;
+        $workspec->content = $request->content;
+
+        // 選択されたファイル情報よりファイルを削除/アップロード/維持してパスを保存する
+        if($request->delete == "on"){
+            $request->file = null;
+        } elseif (!is_null($request->file) && $request->delete == null) {
+            $directory = 'public/application/' . $request->application_id;
+            Storage::makeDirectory($directory);
+            $file_name = $request->file('file')->getClientOriginalName();
+            $request->file('file')->storeAs($directory, $file_name);
+            $request->file = $file_name;
+        } else {
+            $request->file = $request->old_file;
+        }
+        $workspec->file = $request->file;
+
+        $workspec->quantity = $request->quantity;
+        $workspec->unit = $request->unit;
+        $workspec->save();
+
+        $user = Auth::user();
+        if ($user->roll == 'creator') {
+            return redirect()
+            ->route('creator.workspecs.index', ['application' => $request->application_id])
+            ->with(['message'=>'更新しました。', 'status'=>'info']);
+        } else {
+            return redirect()
+            ->route('user.workspecs.index', ['application' => $request->application_id])
+            ->with(['message'=>'更新しました。', 'status'=>'info']);
+        }
     }
 
     /**
@@ -133,6 +169,19 @@ class WorkspecController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $workspec = Workspec::findOrFail($id);
+        $application = Application::where('id','=', $workspec->application_id)->first();
+        Workspec::findOrFail($id)->delete(); //ソフトデリート
+
+        // $user = Auth::user();
+        // if ($user->roll == 'creator') {
+        //     return redirect()
+        //     ->route('creator.workspecs.index', ['application' => $application->id])
+        //     ->with(['message'=>'削除しました。', 'status'=>'alert']);
+        // } else {
+        //     return redirect()
+        //     ->route('user.workspecs.index', ['application' => $application->id])
+        //     ->with(['message'=>'削除しました。', 'status'=>'alert']);
+        // }
     }
 }

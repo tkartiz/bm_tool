@@ -37,7 +37,7 @@
                         <div class="p-3 flex flex-wrap bg-white">
                             <!-- 申請内容・内訳 -->
                             <BreezeValidationErrors :errors="errors" />
-                            <form method="POST" action="{{ route('user.workspecs.store') }}">
+                            <form method="POST" action="{{ route('user.workspecs.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <input type="integer" name="application_id" value="{{ $application->id }}" class="hidden" />
                                 <div class="w-full pt-3 text-center">
@@ -101,8 +101,10 @@
                                             <label for="work_content">内容（品目にない場合に記載）</label>
                                             <textarea id="work_content" name="content" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-24 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea><br>
                                             <div class="flex w-full">
-                                                <button class="w-1/5 bg-red-500 hover:bg-red-700 text-white rounded-l-xl">削除</button>
-                                                <input type="file" @input="file = $event.target.files[0]" class="w-4/5">
+                                                <div class="w-1/4 me-2">
+                                                    <input type="checkbox" name="check" class="w-5 h-5 me-1 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 p-1 leading-8 transition-colors duration-200 ease-in-out">削除する
+                                                </div>
+                                                <input type="file" name="file" class="w-3/4">
                                             </div>
                                         </div>
                                         <div class="p-1 w-1/12">
