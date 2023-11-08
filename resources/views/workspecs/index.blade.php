@@ -8,10 +8,7 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="w-40 ms-auto flex px-5 mt-4">
-                    <a href="" class="w-full btn p-2 text-center text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-xl">
-                        新規作成</a>
-                </div>
+                
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <section class="text-gray-600 body-font">
                         <div class="px-5 py-2 bg-white mb-5">
@@ -72,7 +69,7 @@
                                             <td class="px-2 py-3">
                                                 <form id="delete_{{ $workspec->id }}" method="post" action="{{ route('user.workspecs.destroy', $workspec->id) }}">
                                                     @csrf
-                                                    @method('put')
+                                                    @method('delete')
                                                     <a href="#" data-id="{{ $workspec->id }}" onclick="deleteWorkspec(this)" class="w-full p-1 text-center">
                                                         <span class="i-fa6-regular-trash-can bg-red-500 w-5 h-5"></span>
                                                     </a>

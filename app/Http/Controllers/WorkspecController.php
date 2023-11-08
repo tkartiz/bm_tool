@@ -132,7 +132,10 @@ class WorkspecController extends Controller
         $workspec->content = $request->content;
 
         // 選択されたファイル情報よりファイルを削除/アップロード/維持してパスを保存する
+
         if($request->delete == "on"){
+            $deletefile = 'public/application/' . $request->application_id. '/'.$request->old_file;
+            Storage::delete($deletefile);
             $request->file = null;
         } elseif (!is_null($request->file) && $request->delete == null) {
             $directory = 'public/application/' . $request->application_id;
@@ -170,18 +173,28 @@ class WorkspecController extends Controller
     public function destroy($id)
     {
         $workspec = Workspec::findOrFail($id);
-        $application = Application::where('id','=', $workspec->application_id)->first();
-        Workspec::findOrFail($id)->delete(); //ソフトデリート
+        $application_id = $workspec->application_id;
 
-        // $user = Auth::user();
-        // if ($user->roll == 'creator') {
-        //     return redirect()
-        //     ->route('creator.workspecs.index', ['application' => $application->id])
-        //     ->with(['message'=>'削除しました。', 'status'=>'alert']);
-        // } else {
-        //     return redirect()
-        //     ->route('user.workspecs.index', ['application' => $application->id])
-        //     ->with(['message'=>'削除しました。', 'status'=>'alert']);
-        // }
+        // 添付ファイルが存在したら削除
+
+        if(!is_null($workspec->file)) {
+            $deletefile = 'public/application/' . $workspec->application_id. '/'.$workspec->file;
+            Storage::delete($deletefile);
+            $workspec->file = null;
+        } 
+        
+        // データの物理削除
+        $workspec->forceDelete();
+
+        $user = Auth::user();
+        if ($user->roll == 'creator') {
+            return redirect()
+            ->route('creator.workspecs.index', ['application' => $application_id])
+            ->with(['message'=>'削除しました。', 'status'=>'alert']);
+        } else {
+            return redirect()
+            ->route('user.workspecs.index', ['application' => $application_id])
+            ->with(['message'=>'削除しました。', 'status'=>'alert']);
+        }
     }
 }

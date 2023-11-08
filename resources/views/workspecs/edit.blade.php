@@ -119,7 +119,7 @@ $array_articles = ["", "出力のみ", "文字校【軽】500", "文字校【重
                                         </div>
                                     </div>
                                     <div class="w-3/4 flex mx-auto my-10">
-                                        <button type="submit" class="w-1/2 py-2 text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-l-xl">入力する</button>
+                                        <button type="submit" class="w-1/2 py-2 text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-l-xl">更新する</button>
                                         <a href="{{ route('user.workspecs.index', ['application'=>$application->id]) }}" class="w-1/2 py-2 text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-r-xl">
                                             戻る</a>
                                     </div>

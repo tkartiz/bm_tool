@@ -16,15 +16,14 @@ class CreateWorkspecsTable extends Migration
         Schema::create('workspecs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('application_id');
-            $table->string('size');
-            $table->string('format');
+            $table->string('size')->nullable();
+            $table->string('format')->nullable();
             $table->string('article')->nullable();
             $table->string('content')->nullable();
             $table->string('file')->nullable();
             $table->integer('quantity')->nullable();
             $table->string('unit')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

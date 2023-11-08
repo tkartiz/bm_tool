@@ -127,7 +127,7 @@ class ApplicationController extends Controller
      */
     public function destroy($id)
     {
-        Application::findOrFail($id)->delete(); //ソフトデリート
+        Application::findOrFail($id)->forceDelete(); //物理削除
         return redirect()
         ->route('user.applications.index')
         ->with(['message'=>'申請書を削除しました。', 'status'=>'alert']);

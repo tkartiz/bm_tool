@@ -24,7 +24,6 @@ class CreateApplicationsTable extends Migration
             $table->integer('ttl_price_exc')->nullable();
             $table->integer('ttl_price_incl')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

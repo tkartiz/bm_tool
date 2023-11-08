@@ -53,7 +53,7 @@
                                             <td class="px-2 py-3">
                                                 <form id="delete_{{ $application->id }}" method="post" action="{{ route('user.applications.destroy', $application->id) }}">
                                                     @csrf
-                                                    @method('put')
+                                                    @method('delete')
                                                     <a href="#" data-id="{{ $application->id }}" onclick="deletePost(this)" class="w-full p-1 text-center">
                                                         <span class="i-fa6-regular-trash-can bg-red-500 w-5 h-5"></span>
                                                     </a>
