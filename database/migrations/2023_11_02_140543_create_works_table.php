@@ -23,7 +23,7 @@ class CreateWorksTable extends Migration
             $table->date('completed_at')->nullable();
             $table->integer('price_incl')->nullable();
             $table->integer('price_exc')->nullable();
-            $table->string('message')->nullable();
+            $table->text('message')->nullable();
             $table->timestamps();
         });
     }

@@ -45,28 +45,30 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         // 問い合わせ内容保存
-        // Contact::create([
-        //     'user_id' => $request->user_id,
-        //     'application_id' => $request->application_id,
-        //     'email' => $request->email,
-        //     'title' => $request->title,
-        //     'message' => $request->message,
-        // ]);
+        Contact::create([
+            'user_id' => $request->user_id,
+            'application_id' => $request->application_id,
+            'email' => $request->email,
+            'email2' => $request->email2,
+            'title' => $request->title,
+            'message' => $request->message,
+        ]);
 
         // メール送信
+        $mailTo = 't.kamiya@artiz-creative.co.jp';
         $inputs = $request->all();
-        if(!$inputs){
-            return redirect()->route('user.contacts.create');
+        if (!is_null($inputs['email2'])) {
+            Mail::to($inputs['email2'])
+                ->cc($mailTo)
+                ->send(new ContactSendMail($inputs));
+        } else {
+            Mail::to($inputs['email'])
+                ->cc($mailTo)
+                ->send(new ContactSendMail($inputs));
         }
-        
-        $user = Auth::user();
-        Mail::to($inputs['email'])
-            ->cc($user->email)
-            ->send(new ContactSendMail($inputs));
-        
+
         $request->session()->regenerateToken(); //2回メール送信を防ぐため
 
-        dd($inputs);
         return redirect()
             ->route('user.applications.index')
             ->with(['message' => '問合せを送信しました。', 'status' => 'info']);

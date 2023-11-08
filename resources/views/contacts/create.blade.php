@@ -35,10 +35,11 @@
                                             <div class="w-1/2 pe-10">
                                                 <p class="leading-7 text-gray-600">ご登録Eメール</p>
                                                 <p class="w-full border border-gray-300text-base outline-none text-gray-700 py-1 px-3 leading-8">{{ $user->email }}</p>
+                                                <input name="email" value="{{ $user->email }}" class="hidden" />
                                             </div>
                                             <div class="w-1/2">
-                                                <label for="email" class="leading-7 text-gray-600">返信用のEメール<small>（任意）</small></label>
-                                                <input type="email" id="email" name="email" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                                <label for="email2" class="leading-7 text-gray-600">返信用のEメール（任意）</label>
+                                                <input type="email" id="email2" name="email2" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                             </div>
                                         </div>
                                         <div class="p-2 w-full">

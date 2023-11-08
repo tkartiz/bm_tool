@@ -16,7 +16,7 @@ class ContactSendMail extends Mailable
 
     public $user_name;
     public $application_id;
-    public $subject;
+    public $application_subject;
     public $email;
     public $title;
     public $message;
@@ -28,10 +28,14 @@ class ContactSendMail extends Mailable
      */
     public function __construct($inputs)
     {
-        $this->user_name  = User::find($inputs['user_id']);
-        $this->email = $inputs['email'];
+        $this->user_name  = User::find($inputs['user_id'])->name;
+        if(!is_null($inputs['email2'])){
+            $this->email = $inputs['email2'];
+        } else {
+            $this->email = $inputs['email'];
+        }
         $this->application_id = $inputs['application_id'];
-        $this->subject = Application::find($inputs['application_id'])->subject;
+        $this->application_subject = Application::find($inputs['application_id'])->subject;
         $this->title = $inputs['title'];
         $this->message = $inputs['message'];
     }
@@ -50,7 +54,7 @@ class ContactSendMail extends Mailable
                 'user_name' => $this->user_name,
                 'email' => $this->email,
                 'application_id' => $this->application_id,
-                'subject' => $this->subject,
+                'application_subject' => $this->application_subject,
                 'title' => $this->title ? $this->title : null,
                 'body' => $this->message ? $this->message : null
             ]);
