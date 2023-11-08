@@ -11,6 +11,10 @@ use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\WorkController;
+use App\Http\Controllers\Os_appdController;
+use App\Http\Controllers\OutsourcingController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +25,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// アプリ用
+Route::resource('works', WorkController::class)
+->middleware(['auth:admin']);
+
+Route::resource('os_appds', Os_appdController::class)
+->middleware(['auth:admin']);
+
+Route::resource('outsourcings', OutsourcingController::class)
+->middleware(['auth:admin']);
+
+// アプリ用
 
 Route::get('/', function () {
     return view('admin.welcome');
