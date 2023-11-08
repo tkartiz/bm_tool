@@ -9,6 +9,7 @@ use App\Models\Contact;
 use App\Models\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactSendMail;
 
 class ContactController extends Controller
 {
@@ -44,25 +45,31 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         // 問い合わせ内容保存
-        Contact::create([
-            'user_id' => $request->user_id,
-            'application_id' => $request->application_id,
-            'email' => $request->email,
-            'title' => $request->title,
-            'message' => $request->message,
-        ]);
+        // Contact::create([
+        //     'user_id' => $request->user_id,
+        //     'application_id' => $request->application_id,
+        //     'email' => $request->email,
+        //     'title' => $request->title,
+        //     'message' => $request->message,
+        // ]);
 
         // メール送信
-        // $user = Auth::user();
-        // $mailTo = 't.kamiya@artiz-creative.co.jp';
-        // $contactContent = '申請書が申請されました。';
-        // Mail::to($mailTo)
-        //     ->cc($user->email)
-        //     ->send($contactContent);
+        $inputs = $request->all();
+        if(!$inputs){
+            return redirect()->route('user.contacts.create');
+        }
+        
+        $user = Auth::user();
+        Mail::to($inputs['email'])
+            ->cc($user->email)
+            ->send(new ContactSendMail($inputs));
+        
+        $request->session()->regenerateToken(); //2回メール送信を防ぐため
 
+        dd($inputs);
         return redirect()
-        ->route('user.applications.index')
-        ->with(['message'=>'問合せを送信しました。', 'status'=>'info']);
+            ->route('user.applications.index')
+            ->with(['message' => '問合せを送信しました。', 'status' => 'info']);
     }
 
     /**

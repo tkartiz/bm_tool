@@ -14,6 +14,7 @@
 
                             <form method="POST" action="{{ route('user.contacts.store') }}">
                                 @csrf
+                                @method('POST')
                                 <input type="integer" name="application_id" value="{{ $application->id }}" class="hidden" />
                                 <input type="integer" name="user_id" value="{{ $user->id }}" class="hidden" />
 
