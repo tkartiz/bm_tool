@@ -57,6 +57,15 @@ class WorkspecController extends Controller
             $request->file = $file_name;
             $request->filepath = 'storage/application/' . $request->application_id . '/' . $file_name;
         }
+
+        $request->validate([
+            'application_id' => 'required|integer',
+            'size' => 'required',
+            'format' => 'required',
+            'quantity' => 'integer',
+            'unit' => 'string',
+        ]);
+
         $workspec = Workspec::create([
             'application_id' => $request->application_id,
             'size' => $request->size,

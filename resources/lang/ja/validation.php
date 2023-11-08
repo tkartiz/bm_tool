@@ -127,5 +127,12 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
-    'attributes'           => [],
+    'attributes'           => [
+        'subject' => '品名',
+        'desired_dlvd_at' => '希望納期',
+        'size' => 'サイズ',
+        'format' => '出力形式',
+        'quantity' => '数量',
+        'unit' => '単位',
+    ],
 ];

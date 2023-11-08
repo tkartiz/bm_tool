@@ -124,9 +124,15 @@
                                 </table>
                             </div>
                             <div class="w-3/4 flex mx-auto mt-5">
+                                @if(is_null($application->applicated_at))
                                 <a href="{{ route('user.workspecs.create', ['application'=>$application->id]) }}" class="w-1/2 py-2 text-center text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-l-xl">
-                                    入力する
+                                    追加する
                                 </a>
+                                @else
+                                <div class="w-1/2 py-2 text-center text-white bg-indigo-200 border-0 focus:outline-none rounded-l-xl">
+                                    追加する
+                                </div>
+                                @endif
                                 <a href="{{ route('user.applications.index', $application->id) }}" class="w-1/2 py-2 text-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-r-xl">
                                     戻る
                                 </a>
