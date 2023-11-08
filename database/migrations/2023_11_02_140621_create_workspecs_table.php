@@ -16,8 +16,8 @@ class CreateWorkspecsTable extends Migration
         Schema::create('workspecs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('application_id');
-            $table->string('size')->nullable();
-            $table->string('format')->nullable();
+            $table->string('size');
+            $table->string('format');
             $table->string('article')->nullable();
             $table->string('content')->nullable();
             $table->string('file')->nullable();

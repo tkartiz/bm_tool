@@ -73,6 +73,7 @@
                                                     </a>
                                                     <input type="hidden" name="user_id" value="{{ $user }}">
                                                     <input type="hidden" name="subject" value="{{ $application->subject }}">
+                                                    <input type="hidden" name="works_quantity" value="{{ $application->works_quantity }}">
                                                     <input type="hidden" name="severity" value="{{ $application->severity }}">
                                                     <input type="hidden" name="desired_dlvd_at" value="{{ $application->desired_dlvd_at }}">
                                                     <input type="hidden" name="check" value="true">
@@ -82,7 +83,7 @@
                                             <td class="px-2 py-3 bg-gray-100"></td>
                                             <td class="px-2 py-3 bg-gray-100"></td>
                                             <td class="px-2 py-3 bg-gray-100">
-                                                <a href="" class="w-full p-1 text-center">
+                                                <a href="{{ route('user.contacts.create', ['application' => $application->id ]) }}" class="w-full p-1 text-center">
                                                     <span class="i-fa6-solid-envelope bg-green-500 w-5 h-5 -mb-3"></span><br><small>問合せ</small>
                                                 </a>
                                             </td>
@@ -108,6 +109,11 @@
                                             </td>
                                             <td class="px-2 py-3 text-start bg-gray-100">{{ $application->subject }}</td>
                                             <td class="px-2 py-3 bg-gray-100">{{ $application->works_quantity }}</td>
+                                            <td class="px-2 py-3 bg-gray-100">
+                                                <a href="{{ route('user.workspecs.index', ['application'=>$application->id]) }}" class="w-full p-1 text-center">
+                                                    <span class="i-fa6-regular-rectangle-list bg-black-500 w-5 h-5"></span>
+                                                </a>
+                                            </td>
                                             <td class="px-2 py-3 bg-gray-100">{{ $application->severity }}</td>
                                             <td class="px-2 py-3 bg-gray-100">{{ $application->applicated_at }}</td>
                                             <td class="px-2 py-3 bg-gray-100">{{ $application->desired_dlvd_at }}</td>

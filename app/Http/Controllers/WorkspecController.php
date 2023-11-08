@@ -161,6 +161,13 @@ class WorkspecController extends Controller
         $workspec->unit = $request->unit;
         $workspec->save();
 
+        // 親の申請書の制作物点数を更新する
+        $workspecs = Workspec::where('application_id', '=', $request->application_id)->get();
+        $works_quantity = count($workspecs);
+        $Workspec2Application = Application::find($request->application_id);
+        $Workspec2Application->works_quantity = $works_quantity;
+        $Workspec2Application->save();
+
         $user = Auth::user();
         if ($user->roll == 'creator') {
             return redirect()

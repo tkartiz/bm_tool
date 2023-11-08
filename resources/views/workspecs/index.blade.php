@@ -64,6 +64,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @if(is_null($application->applicated_at))
                                         @foreach($workspecs as $workspec)
                                         <tr v-for="workspec in workspecs" :key="$workspec->id">
                                             <td class="px-2 py-3">
@@ -97,12 +98,34 @@
                                             <td class="px-2 py-3">{{ $workspec->unit }}</td>
                                         </tr>
                                         @endforeach
+                                        @else
+                                        @foreach($workspecs as $workspec)
+                                        <tr v-for="workspec in workspecs" :key="$workspec->id">
+                                            <td colspan="2" class="px-2 py-3 bg-gray-100">申請済</td>
+                                            <td class="px-2 py-3 bg-gray-100">{{ $workspec->id }}</td>
+                                            <td class="px-2 py-3 bg-gray-100">{{ $workspec->size }}</td>
+                                            <td class="px-2 py-3 bg-gray-100">{{ $workspec->format }}</td>
+                                            <td class="px-2 py-3 bg-gray-100">{{ $workspec->article }}</td>
+                                            <td class="px-2 py-3 bg-gray-100">{{ $workspec->content }}</td>
+                                            <td class="px-2 py-3 bg-gray-100">
+                                                @if(!is_null($workspec->file))
+                                                <a href="{{$workspec->filepath}}" target="_BLANK">
+                                                    <img src="{{$workspec->filepath}}" class="mx-auto h-auto" style="width:100px; height:auto" />
+                                                    <p>{{ $workspec->file }}</p>
+                                                </a>
+                                                @endif
+                                            </td>
+                                            <td class="px-2 py-3 bg-gray-100">{{ $workspec->quantity }}</td>
+                                            <td class="px-2 py-3 bg-gray-100">{{ $workspec->unit }}</td>
+                                        </tr>
+                                        @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
                             <div class="w-3/4 flex mx-auto mt-5">
                                 <a href="{{ route('user.workspecs.create', ['application'=>$application->id]) }}" class="w-1/2 py-2 text-center text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-l-xl">
-                                    制作物仕様の入力
+                                    入力する
                                 </a>
                                 <a href="{{ route('user.applications.index', $application->id) }}" class="w-1/2 py-2 text-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-r-xl">
                                     戻る
