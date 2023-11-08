@@ -77,7 +77,7 @@
                                                 </td>
                                                 <td class="px-2 py-3">
                                                     @if($work->outsourcing == 1)
-                                                    <p>あり</p>
+                                                    <a href="{{ route('admin.os_appds.index', $work->os_appd_id) }}" class="text-blue-500 underline">あり</a>
                                                     @elseif($work->outsourcing == 0)
                                                     <p>なし</p>
                                                     @endif

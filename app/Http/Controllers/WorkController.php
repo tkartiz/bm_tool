@@ -29,21 +29,17 @@ class WorkController extends Controller
                 'works' => Work::all(),
                 'workspecs' => Workspec::all(),
                 'applications' => Application::all(),
-                'os_appd' => Os_appd::all(),
+                'os_appds' => Os_appd::all(),
                 'creators' => Creator::all(),
                 'user' => $user,
             ]);
-        } else {
-            $creators = Creator::where('id', '=', $user->id)->first();
-            $work = Work::where('creator_id', '=', $user->id)->get();
-            $os_appd = Os_appd::all();
-
+        } elseif($user->roll === 'creator') {
             return view('creator.works.index', [
-                'works' => $work,
+                'works' => Work::where('creator_id', '=', $user->id)->get(),
                 'workspecs' => Workspec::all(),
                 'applications' => Application::all(),
-                'os_appd' => $os_appd,
-                'creators' => $creators,
+                'os_appds' => Os_appd::all(),
+                'creator' => Creator::where('id', '=', $user->id)->first(),
                 'user' => $user,
             ]);
         };
@@ -78,7 +74,39 @@ class WorkController extends Controller
      */
     public function show($id)
     {
-        //
+        $work = Work::findOrFail($id);
+        $Work2Workspec = Workspec::find($work->work_spec_id);
+        $Workspec2Application = Application::find($Work2Workspec->application_id);
+        $Work2Os_appd = Os_appd::where('work_id', '=', $work->id)->first();
+        $client = User::where('id', '=', $Workspec2Application->user_id)->first();
+        if($work->creator_id !== null){
+            $creator = Creator::find($work->creator_id);
+        } else {
+            $creator = null;
+        }
+        $user = Auth::user();
+
+        if($user->roll == 'admin'){
+            return view('admin.works.show', [
+                'work' => $work,
+                'workspec' => $Work2Workspec,
+                'application' => $Workspec2Application,
+                'os_appd' => $Work2Os_appd,
+                'client' => $client,
+                'creator' => $creator,
+                'user' => $user,
+            ]);
+        } elseif($user->roll === 'creator') {
+            return view('creator.works.show', [
+                'work' => $work,
+                'workspec' => $Work2Workspec,
+                'application' => $Workspec2Application,
+                'os_appd' => $Work2Os_appd,
+                'client' => $client,
+                'creator' => $creator,
+                'user' => $user,
+            ]);
+        }
     }
 
     /**
@@ -97,7 +125,7 @@ class WorkController extends Controller
             $client = User::where('id', '=', $Workspec2Application->user_id)->first();
             $creators = Creator::all();
 
-            return view('Admin/works/edit', [
+            return view('admin.works.edit', [
                 'work' => $work,
                 'workspec' => $Work2Workspec,
                 'application' => $Workspec2Application,
@@ -105,13 +133,13 @@ class WorkController extends Controller
                 'creators' => $creators,
                 'user' => $user,
             ]);
-        } else {
+        } elseif($user->roll === 'creator') {
             $Work2Workspec = Workspec::find($work->work_spec_id);
             $Workspec2Application = Application::find($Work2Workspec->application_id);
             $client = User::where('id', '=', $Workspec2Application->user_id)->first();
             $creators = Creator::where('id', '=', $user->id)->first();
 
-            return view('Creator/works/edit', [
+            return view('creator.works.edit', [
                 'work' => $work,
                 'workspec' => $Work2Workspec,
                 'application' => $Workspec2Application,
@@ -131,7 +159,35 @@ class WorkController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $work = Work::findOrFail($id);
+        $work->creator_id = $request->creator_id;
+        if ($request->outsourcing === "1") {
+            $work->outsourcing = true;
+            $os_appd = Os_appd::where('work_id', '=', $work->id)->first();
+            if (empty($os_appd)) {
+                Os_appd::create([
+                    'work_id' => $work->id,
+                ]);
+            }
+        } elseif ($request->outsourcing === "0") {
+            $work->outsourcing = false;
+        }
+
+        $work->started_at = $request->started_at;
+        $work->completed_at = $request->completed_at;
+        $work->message = $request->message;
+        $work->save();
+
+        $user = Auth::user();
+        if ($user->roll === 'admin') {
+            return redirect()
+                ->route('admin.works.index', ['work' => $request->work_id])
+                ->with(['message'=>'申請書を更新しました。', 'status'=>'info']);
+        } elseif($user->roll === 'creator') {
+            return redirect()
+                ->route('creator.works.index', ['work' => $request->work_id])
+                ->with(['message'=>'申請書を更新しました。', 'status'=>'info']);
+        }
     }
 
     /**
