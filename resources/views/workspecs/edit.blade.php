@@ -97,6 +97,7 @@ $array_articles = ["", "出力のみ", "文字校【軽】500", "文字校【重
                                             <div class="flex w-full">
                                                 <input type="file" name="file" class="w-3/4">
                                                 <input type="hidden" name="old_file" value="{{ $workspec->file }}">
+                                                <input type="hidden" name="old_filepath" value="{{ $workspec->filepath }}">
                                             </div>
                                             <div class="flex w-full">
                                                 <p class="w-3/4 text-start">現ファイル：{{ $workspec->file }}</p>

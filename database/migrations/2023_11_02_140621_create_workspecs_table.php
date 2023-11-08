@@ -21,6 +21,7 @@ class CreateWorkspecsTable extends Migration
             $table->string('article')->nullable();
             $table->string('content')->nullable();
             $table->string('file')->nullable();
+            $table->string('filepath')->nullable();
             $table->integer('quantity')->nullable();
             $table->string('unit')->nullable();
             $table->timestamps();

@@ -19,6 +19,7 @@ class Workspec extends Model
         'article',
         'content',
         'file',
+        'filepath',
         'quantity',
         'unit',
     ];    

@@ -8,7 +8,7 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                
+
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <section class="text-gray-600 body-font">
                         <div class="px-5 py-2 bg-white mb-5">
@@ -80,18 +80,18 @@
                                                     <span class="i-fa6-regular-pen-to-square bg-blue-500 w-5 h-5"></span>
                                                 </a>
                                             </td>
-                                            <td class="px-2 py-3">
-                                                <a class="text-blue-400" href="{{ route('user.workspecs.show', $workspec->id) }}">
-                                                    {{ $workspec->id }}
-                                                </a>
-                                            </td>
+                                            <td class="px-2 py-3">{{ $workspec->id }}</td>
                                             <td class="px-2 py-3">{{ $workspec->size }}</td>
                                             <td class="px-2 py-3">{{ $workspec->format }}</td>
                                             <td class="px-2 py-3">{{ $workspec->article }}</td>
                                             <td class="px-2 py-3">{{ $workspec->content }}</td>
                                             <td class="px-2 py-3">
-                                                <span v-if="$workspec->file"><img class="mx-auto" :src="'/storage/'+ $workspec->application_id + '/' + $workspec->file" style="width: 100px" /></span>
-                                                <p>{{ $workspec->file }}</p>
+                                                @if(!is_null($workspec->file))
+                                                <a href="{{$workspec->filepath}}" target="_BLANK">
+                                                    <img src="{{$workspec->filepath}}" class="mx-auto h-auto" style="width:100px; height:auto" />
+                                                    <p>{{ $workspec->file }}</p>
+                                                </a>
+                                                @endif
                                             </td>
                                             <td class="px-2 py-3">{{ $workspec->quantity }}</td>
                                             <td class="px-2 py-3">{{ $workspec->unit }}</td>

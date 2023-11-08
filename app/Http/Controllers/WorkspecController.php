@@ -55,6 +55,7 @@ class WorkspecController extends Controller
             $file_name = $request->file('file')->getClientOriginalName();
             $request->file('file')->storeAs($directory, $file_name);
             $request->file = $file_name;
+            $request->filepath = 'storage/application/' . $request->application_id . '/' . $file_name;
         }
         $workspec = Workspec::create([
             'application_id' => $request->application_id,
@@ -63,6 +64,7 @@ class WorkspecController extends Controller
             'article' => $request->article,
             'content' => $request->content,
             'file' => $request->file,
+            'filepath' => $request->filepath,
             'quantity' => $request->quantity,
             'unit' => $request->unit,
         ]);
@@ -82,12 +84,12 @@ class WorkspecController extends Controller
         $user = Auth::user();
         if ($user->roll == 'creator') {
             return redirect()
-            ->route('creator.workspecs.index', ['application' => $request->application_id])
-            ->with(['message'=>'登録しました。', 'status'=>'info']);
+                ->route('creator.workspecs.index', ['application' => $request->application_id])
+                ->with(['message' => '登録しました。', 'status' => 'info']);
         } else {
             return redirect()
-            ->route('user.workspecs.index', ['application' => $request->application_id])
-            ->with(['message'=>'登録しました。', 'status'=>'info']);
+                ->route('user.workspecs.index', ['application' => $request->application_id])
+                ->with(['message' => '登録しました。', 'status' => 'info']);
         }
     }
 
@@ -111,7 +113,7 @@ class WorkspecController extends Controller
     public function edit($id)
     {
         $workspec = Workspec::findOrFail($id);
-        $application = Application::where('id','=', $workspec->application_id)->first();
+        $application = Application::where('id', '=', $workspec->application_id)->first();
         $user = Auth::user();
         return view('workspecs.edit', compact('user', 'application', 'workspec'));
     }
@@ -133,20 +135,27 @@ class WorkspecController extends Controller
 
         // 選択されたファイル情報よりファイルを削除/アップロード/維持してパスを保存する
 
-        if($request->delete == "on"){
-            $deletefile = 'public/application/' . $request->application_id. '/'.$request->old_file;
+        if ($request->delete == "on") {
+            $deletefile = 'public/application/' . $request->application_id . '/' . $request->old_file;
             Storage::delete($deletefile);
             $request->file = null;
+            $request->filepath = null;
         } elseif (!is_null($request->file) && $request->delete == null) {
             $directory = 'public/application/' . $request->application_id;
             Storage::makeDirectory($directory);
             $file_name = $request->file('file')->getClientOriginalName();
             $request->file('file')->storeAs($directory, $file_name);
             $request->file = $file_name;
+            $request->filepath = 'storage/application/' . $request->application_id . '/' . $file_name;
+            // 旧ファイルは削除する
+            $deletefile = 'public/application/' . $request->application_id . '/' . $request->old_file;
+            Storage::delete($deletefile);
         } else {
             $request->file = $request->old_file;
+            $request->filepath = $request->old_filepath;
         }
         $workspec->file = $request->file;
+        $workspec->filepath = $request->filepath;
 
         $workspec->quantity = $request->quantity;
         $workspec->unit = $request->unit;
@@ -155,12 +164,12 @@ class WorkspecController extends Controller
         $user = Auth::user();
         if ($user->roll == 'creator') {
             return redirect()
-            ->route('creator.workspecs.index', ['application' => $request->application_id])
-            ->with(['message'=>'更新しました。', 'status'=>'info']);
+                ->route('creator.workspecs.index', ['application' => $request->application_id])
+                ->with(['message' => '更新しました。', 'status' => 'info']);
         } else {
             return redirect()
-            ->route('user.workspecs.index', ['application' => $request->application_id])
-            ->with(['message'=>'更新しました。', 'status'=>'info']);
+                ->route('user.workspecs.index', ['application' => $request->application_id])
+                ->with(['message' => '更新しました。', 'status' => 'info']);
         }
     }
 
@@ -177,24 +186,31 @@ class WorkspecController extends Controller
 
         // 添付ファイルが存在したら削除
 
-        if(!is_null($workspec->file)) {
-            $deletefile = 'public/application/' . $workspec->application_id. '/'.$workspec->file;
+        if (!is_null($workspec->file)) {
+            $deletefile = 'public/application/' . $workspec->application_id . '/' . $workspec->file;
             Storage::delete($deletefile);
             $workspec->file = null;
-        } 
-        
+        }
+
         // データの物理削除
         $workspec->forceDelete();
+
+        // 親の申請書の制作物点数を更新する
+        $workspecs = Workspec::where('application_id', '=', $application_id)->get();
+        $works_quantity = count($workspecs);
+        $Workspec2Application = Application::find($application_id);
+        $Workspec2Application->works_quantity = $works_quantity;
+        $Workspec2Application->save();
 
         $user = Auth::user();
         if ($user->roll == 'creator') {
             return redirect()
-            ->route('creator.workspecs.index', ['application' => $application_id])
-            ->with(['message'=>'削除しました。', 'status'=>'alert']);
+                ->route('creator.workspecs.index', ['application' => $application_id])
+                ->with(['message' => '削除しました。', 'status' => 'alert']);
         } else {
             return redirect()
-            ->route('user.workspecs.index', ['application' => $application_id])
-            ->with(['message'=>'削除しました。', 'status'=>'alert']);
+                ->route('user.workspecs.index', ['application' => $application_id])
+                ->with(['message' => '削除しました。', 'status' => 'alert']);
         }
     }
 }
