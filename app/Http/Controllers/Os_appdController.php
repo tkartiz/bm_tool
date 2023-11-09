@@ -183,34 +183,62 @@ class Os_appdController extends Controller
 
         // 競合先更新
         $comp1 = Outsourcing::where('id', '=', $request->outsourcing1_id)->first();
-        // if (!is_null($request->comp1_file1)) {
-        //     $directory = 'public/outsourcing/' . $request->outsourcing1_id;
-        //     Storage::makeDirectory($directory);
-        //     $file_name = $request->comp1_file1('file')->getClientOriginalName();
-        //     $request->comp1_file1('file')->storeAs($directory, $file_name);
-        //     $request->comp1_file1 = $file_name;
-        //     $request->comp1_file1path = '/storage/outsourcing/' . $request->application_id . '/' . $file_name;
-        // }
+        $comp2 = Outsourcing::where('id', '=', $request->outsourcing2_id)->first();
+        $comp3 = Outsourcing::where('id', '=', $request->outsourcing3_id)->first();
+
+        dd($request->file('file'));
+
+        for ($i = 0; $i < 9; $i++) {
+            if (!is_null($request->file('file')[$i])) {
+                $directory = 'public/outsourcing/' . $request->outsourcing1_id;
+                Storage::makeDirectory($directory);
+                $file_name = $request->file('file')[$i]->getClientOriginalName();
+                $request->file('file')[$i]->storeAs($directory, $file_name[$i]);
+                $file_path = '/storage/outsourcing/' . $request->application_id . '/' . $file_name[$i];
+
+                if ($i == 0) {
+                    $comp1->comp_file1 = $file_name;
+                    $comp1->comp_file1path = $file_path;
+                } elseif ($i == 1) {
+                    $comp1->comp_file2 = $file_name;
+                    $comp1->comp_file2path = $file_path;
+                } elseif ($i == 2) {
+                    $comp1->comp_file3 = $file_name;
+                    $comp1->comp_file3path = $file_path;
+                } elseif ($i == 3) {
+                    $comp2->comp_file1 = $file_name;
+                    $comp2->comp_file1path = $file_path;
+                } elseif ($i == 4) {
+                    $comp2->comp_file2 = $file_name;
+                    $comp2->comp_file2path = $file_path;
+                } elseif ($i == 5) {
+                    $comp2->comp_file3 = $file_name;
+                    $comp2->comp_file3path = $file_path;
+                } elseif ($i == 6) {
+                    $comp3->comp_file1 = $file_name;
+                    $comp3->comp_file1path = $file_path;
+                } elseif ($i == 7) {
+                    $comp3->comp_file2 = $file_name;
+                    $comp3->comp_file2path = $file_path;
+                } elseif ($i == 8) {
+                    $comp3->comp_file3 = $file_name;
+                    $comp3->comp_file3path = $file_path;
+                }
+            }
+        }
+
         $comp1->comp_name = $request->comp1_name;
         $comp1->comp_price_incl = $request->comp1_price_incl;
         $comp1->comp_price_exc = $request->comp1_price_exc;
         $comp1->comp_remarks = $request->comp1_remarks;
-        // $comp1->comp_file1 = $request->comp1_file1;
-        // $comp1->comp_file1path = $request->comp1_file1path;
-        // $comp1->comp_file2 = $request->comp1_file2;
-        // $comp1->comp_file2path = $request->comp1_file2path;
-        // $comp1->comp_file3 = $request->comp1_file3;
-        // $comp1->comp_file3path = $request->comp1_file3path;
         $comp1->save();
 
-        $comp2 = Outsourcing::where('id', '=', $request->outsourcing2_id)->first();
         $comp2->comp_name = $request->comp2_name;
         $comp2->comp_price_incl = $request->comp2_price_incl;
         $comp2->comp_price_exc = $request->comp2_price_exc;
         $comp2->comp_remarks = $request->comp2_remarks;
         $comp2->save();
 
-        $comp3 = Outsourcing::where('id', '=', $request->outsourcing3_id)->first();
         $comp3->comp_name = $request->comp3_name;
         $comp3->comp_price_incl = $request->comp3_price_incl;
         $comp3->comp_price_exc = $request->comp3_price_exc;

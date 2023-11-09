@@ -273,11 +273,11 @@
                                             <th class="py-1">：</th>
                                             @endif
                                             <td class="w-full block py-1">
-                                                <input type="file" name="comp{{ $n+1 }}_file1" class="w-full" />
+                                                <input type="file" name="file[]" multiple="multiple" class="w-full" />
                                                 <input type="hidden" name="old_comp{{ $n+1 }}_file1" value="{{ $outsourcings[$n]->comp_file1 }}" />
-                                                <input type="file" name="comp{{ $n+1 }}_file2" class="w-full" />
+                                                <input type="file" name="file[]" multiple="multiple" class="w-full" />
                                                 <input type="hidden" name="old_comp{{ $n+1 }}_file1" value="{{ $outsourcings[$n]->comp_file1 }}" />
-                                                <input type="file" name="comp{{ $n+1 }}_file3" class="w-full" />
+                                                <input type="file" name="file[]" multiple="multiple" class="w-full" />
                                                 <input type="hidden" name="old_comp{{ $n+1 }}_file1" value="{{ $outsourcings[$n]->comp_file1 }}" />
                                             </td>
                                         </tr>
