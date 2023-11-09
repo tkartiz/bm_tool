@@ -83,7 +83,7 @@
 
                         <div class="px-5 py-2 bg-white mb-5">
                             <x-auth-validation-errors class="mb-4" :errors="$errors" />
-                            <form method="POST" action="{{ route('admin.works.update', $work->id) }}" class="w-full">
+                            <form method="POST" action="{{ route('creator.works.update', $work->id) }}" class="w-full">
                                 @csrf
                                 @method('PUT')
                                 <input id="work_id" value="$work->id" type="hidden">
@@ -157,7 +157,7 @@
                                     <button type="submit" class="w-1/2 p-2 text-white bg-indigo-500 border-0 focus:outline-none hover:bg-indigo-600 rounded-l-xl">
                                         更新する
                                     </button>
-                                    <a href="{{ route('admin.works.index')}}" class="w-1/2 p-2 btn text-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-r-xl">
+                                    <a href="{{ route('creator.works.index')}}" class="w-1/2 p-2 btn text-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-r-xl">
                                         戻る
                                     </a>
                                 </div>

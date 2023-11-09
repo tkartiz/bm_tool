@@ -16,10 +16,13 @@ class Outsourcing extends Model
         'comp_name',
         'comp_price_incl',
         'comp_price_exc',
-        'remarks',
+        'comp_remarks',
         'comp_file1',
+        'comp_file1path',
         'comp_file2',
+        'comp_file2path',
         'comp_file3',
+        'comp_file3path',
     ];
 
     public function Outsourcing2Os_appd(): BelongsTo

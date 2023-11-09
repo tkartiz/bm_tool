@@ -100,7 +100,7 @@
                                         @endforeach
                                         @else
                                         @foreach($workspecs as $workspec)
-                                        <tr v-for="workspec in workspecs" :key="$workspec->id">
+                                        <tr>
                                             <td colspan="2" class="px-2 py-3 bg-gray-100">申請済</td>
                                             <td class="px-2 py-3 bg-gray-100">{{ $workspec->id }}</td>
                                             <td class="px-2 py-3 bg-gray-100">{{ $workspec->size }}</td>

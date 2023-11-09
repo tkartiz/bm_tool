@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            制作物一覧（制作管理者用）
+            制作物一覧（制作者用）
         </h2>
     </x-slot>
 
@@ -47,7 +47,7 @@
                                         <tbody>
                                             <tr>
                                                 <td class="px-2 py-3">
-                                                    <form id="delete_{{ $work->id }}" method="post" action="{{ route('admin.works.destroy', $work->id) }}">
+                                                    <form id="delete_{{ $work->id }}" method="post" action="{{ route('creator.works.destroy', $work->id) }}">
                                                         @csrf
                                                         @method('delete')
                                                         <a href="#" data-id="{{ $work->id }}" onclick="deleteWork(this)" class="w-full p-1 text-center">
@@ -56,11 +56,11 @@
                                                     </form>
                                                 </td>
                                                 <td class="px-2 py-3">
-                                                    <a href="{{ route('admin.works.edit', $work->id) }}" class="w-full p-1 text-center">
+                                                    <a href="{{ route('creator.works.edit', $work->id) }}" class="w-full p-1 text-center">
                                                         <span class="i-fa6-regular-pen-to-square bg-blue-500 w-5 h-5"></span>
                                                     </a>
                                                 </td>
-                                                <td class="px-2 py-3"><a href="{{ route('admin.works.show', $work->id) }}" class="text-blue-500 underline">{{ $work->id }}</a></td>
+                                                <td class="px-2 py-3"><a href="{{ route('creator.works.show', $work->id) }}" class="text-blue-500 underline">{{ $work->id }}</a></td>
                                                 <td class=" px-2 py-3">{{ $work->work_spec_id }}</td>
                                                 <td class="px-2 py-3">
                                                     @if($user->roll == 'admin')
@@ -76,13 +76,15 @@
                                                     @endif
                                                 </td>
                                                 <td class="px-2 py-3">
-                                                    @if($work->outsourcing == 1)
-                                                    <a href="{{ route('admin.os_appds.show', $work->os_appd_id) }}" class="text-blue-500 underline">あり</a>
-                                                    @elseif($work->outsourcing == 0)
-                                                    <p>なし</p>
+                                                    @if($work->outsourcing == 1)<p>あり</p>
+                                                    @elseif($work->outsourcing == 0)<p>なし</p>
                                                     @endif
                                                 </td>
-                                                <td class="px-2 py-3">{{ $work->os_appd_id }}</td>
+                                                <td class="px-2 py-3">
+                                                    @if($work->outsourcing == 1)
+                                                    <a href="{{ route('creator.os_appds.show', $work->os_appd_id) }}" class="text-blue-500 underline">{{ $work->os_appd_id }}</a>
+                                                    @endif
+                                                </td>
                                                 <td class="px-2 py-3">{{ $work->started_at }}</td>
                                                 <td class="px-2 py-3">{{ $work->completed_at }}</td>
                                                 <td class="px-2 py-3">{{ $work->price_exc }}</td>

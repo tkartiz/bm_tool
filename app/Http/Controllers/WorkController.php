@@ -24,6 +24,7 @@ class WorkController extends Controller
     public function index()
     {
         $user = Auth::user();
+
         if ($user->roll === 'admin') {
             return view('admin.works.index', [
                 'works' => Work::all(),
@@ -168,6 +169,11 @@ class WorkController extends Controller
                 Os_appd::create([
                     'work_id' => $work->id,
                 ]);
+
+                $os_appd_new = Os_appd::where('work_id', '=', $work->id)->first();
+                $work->os_appd_id = $os_appd_new->id;
+            } else {
+                $work->os_appd_id = $os_appd->id;
             }
         } elseif ($request->outsourcing === "0") {
             $work->outsourcing = false;

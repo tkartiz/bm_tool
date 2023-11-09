@@ -117,13 +117,15 @@
                                                 </p>
                                             </td>
                                             <td rowspan="2" class="px-2 pt-1 w-24">
-                                                @if($work->outsourcing == 1)
-                                                <a href="{{ route('admin.os_appds.index', $work->os_appd_id) }}" class="text-blue-500 underline">あり</a>
-                                                @elseif($work->outsourcing == 0)
-                                                <p>なし</p>
+                                                @if($work->outsourcing == 1)<p>あり</p>
+                                                @elseif($work->outsourcing == 0)<p>なし</p>
                                                 @endif
                                             </td>
-                                            <td rowspan="2" class="px-2 py-2 w-20">{{ $work->os_appd_id }}</td>
+                                            <td rowspan="2" class="px-2 py-2 w-20">
+                                                @if($work->outsourcing == 1)
+                                                <a href="{{ route('creator.os_appds.show', $work->os_appd_id) }}" class="text-blue-500 underline">{{ $work->os_appd_id }}</a>
+                                                @endif
+                                            </td>
                                             <td class="px-2 pt-2 w-24">{{ $work->started_at }}</td>
                                             <td class="px-2 pt-2 w-28">{{ $work->price_incl }}</td>
                                             <td rowspan="2" class="ps-2 py-2 w-auto">{{ $work->message }}</td>
@@ -138,7 +140,7 @@
                         </div>
 
                         <div class="w-3/4 flex mx-auto my-10">
-                            <a href="{{ route('admin.works.index')}}" class="w-full p-2 btn text-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-xl">
+                            <a href="{{ route('creator.works.index')}}" class="w-full p-2 btn text-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-xl">
                                 戻る
                             </a>
                         </div>

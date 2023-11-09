@@ -19,10 +19,13 @@ class CreateOutsourcingsTable extends Migration
             $table->string('comp_name')->nullable();
             $table->integer('comp_price_incl')->nullable();
             $table->integer('comp_price_exc')->nullable();
-            $table->text('remarks')->nullable();
+            $table->text('comp_remarks')->nullable();
             $table->string('comp_file1')->nullable();
+            $table->string('comp_file1path')->nullable();
             $table->string('comp_file2')->nullable();
+            $table->string('comp_file2path')->nullable();
             $table->string('comp_file3')->nullable();
+            $table->string('comp_file3path')->nullable();
             $table->timestamps();
         });
     }

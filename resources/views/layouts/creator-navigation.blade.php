@@ -13,7 +13,10 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('creator.dashboard')" :active="request()->routeIs('creator.dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Dashboard') }}（制作者用）
+                    </x-nav-link>
+                    <x-nav-link :href="route('creator.works.index')" :active="request()->routeIs('creator.works.index')">
+                        申請書一覧
                     </x-nav-link>
                 </div>
             </div>
@@ -38,8 +41,7 @@
                         <form method="POST" action="{{ route('creator.logout') }}">
                             @csrf
 
-                            <x-dropdown-link :href="route('creator.logout')"
-                                    onclick="event.preventDefault();
+                            <x-dropdown-link :href="route('creator.logout')" onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
@@ -64,7 +66,10 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('creator.dashboard')" :active="request()->routeIs('creator.dashboard')">
-                {{ __('Dashboard') }}
+                {{ __('Dashboard') }}（制作者用）
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('creator.works.index')" :active="request()->routeIs('creator.works.index')">
+                申請書一覧
             </x-responsive-nav-link>
         </div>
 
@@ -80,8 +85,7 @@
                 <form method="POST" action="{{ route('creator.logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('creator.logout')"
-                            onclick="event.preventDefault();
+                    <x-responsive-nav-link :href="route('creator.logout')" onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
