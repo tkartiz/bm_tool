@@ -55,7 +55,7 @@ class WorkspecController extends Controller
             $file_name = $request->file('file')->getClientOriginalName();
             $request->file('file')->storeAs($directory, $file_name);
             $request->file = $file_name;
-            $request->filepath = 'storage/application/' . $request->application_id . '/' . $file_name;
+            $request->filepath = '/storage/application/' . $request->application_id . '/' . $file_name;
         }
 
         $request->validate([
@@ -155,7 +155,7 @@ class WorkspecController extends Controller
             $file_name = $request->file('file')->getClientOriginalName();
             $request->file('file')->storeAs($directory, $file_name);
             $request->file = $file_name;
-            $request->filepath = 'storage/application/' . $request->application_id . '/' . $file_name;
+            $request->filepath = '/storage/application/' . $request->application_id . '/' . $file_name;
             // 旧ファイルは削除する
             $deletefile = 'public/application/' . $request->application_id . '/' . $request->old_file;
             Storage::delete($deletefile);

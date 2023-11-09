@@ -80,7 +80,7 @@
                             </dl>
                         </div>
                     </div>
-                    <form method="POST" action="{{ route('creator.os_appds.update', $os_appd->id) }}" class="w-full">
+                    <form method="POST" action="{{ route('creator.os_appds.update', $os_appd->id) }}" enctype="multipart/form-data" class="w-full">
                         @csrf
                         @method('PUT')
                         <input name="work_id" value="{{ $work->id }}" type="hidden">
@@ -211,56 +211,78 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="w-full mx-auto overflow-auto">
+                            <div class="w-full mt-20 mx-auto overflow-auto">
                                 <table class="w-full flex">
-                                    @for ($n = 0; $n < 3 ; $n++) <tbody class="w-1/3 p-5">
+                                    @for($n = 0; $n < 3 ; $n++)
+                                        @if($n == 0)<tbody class="w-5/12">
+                                        @else<tbody class="w-3/12">
+                                        @endif
                                         <tr class="w-full flex">
+                                            @if($n == 0)
                                             <th class="w-40 py-1 flex">発注先</th>
                                             <th class="py-1">：</th>
+                                            @endif
                                             <td class="w-full py-1 block text-center items-center pl-4 dark:border-gray-700">
+                                                @if($os_appd->order_recipient == $outsourcings[$n]->id)
+                                                <input type="radio" name="order_recipient" value="{{ $outsourcings[$n]->id }}" checked class="w-4 h-4 text-blue-600 bg-gray-300 border-gray-500 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                @else
                                                 <input type="radio" name="order_recipient" value="{{ $outsourcings[$n]->id }}" class="w-4 h-4 text-blue-600 bg-gray-300 border-gray-500 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                @endif
                                             </td>
                                         </tr>
                                         <input type="hidden" name="outsourcing{{ $n+1 }}_id" value="{{ $outsourcings[$n]->id }}">
                                         <tr class="w-full flex">
+                                            @if($n == 0)
                                             <th class="w-40 py-1 flex">競合先</th>
                                             <th class="py-1">：</th>
+                                            @endif
                                             <td class="w-full py-1">
                                                 <input type="text" name="comp{{ $n+1 }}_name" value="{{ $outsourcings[$n]->comp_name }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                             </td>
                                         </tr>
                                         <tr class="w-full flex">
+                                            @if($n == 0)
                                             <th class="w-40 py-1 flex">金額（税抜）</th>
                                             <th class="py-1">：</th>
+                                            @endif
                                             <td class="w-full block py-1">
                                                 <input type="text" name="comp{{ $n+1 }}_price_exc" value="{{ $outsourcings[$n]->comp_price_exc }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                             </td>
                                         </tr>
                                         <tr class="w-full flex">
+                                            @if($n == 0)
                                             <th class="w-40 py-1 flex">金額（税込）</th>
                                             <th class="py-1">：</th>
+                                            @endif
                                             <td v-if=" !== null" class="w-full block py-1">
                                                 <input type="text" name="comp{{ $n+1 }}_price_incl" value="{{ $outsourcings[$n]->comp_price_incl }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                             </td>
                                         </tr>
                                         <tr class="w-full flex">
+                                            @if($n == 0)
                                             <th class="w-40 py-1 flex">備考</th>
                                             <th class="py-1">：</th>
+                                            @endif
                                             <td class="w-full block py-1">
                                                 <textarea name="comp{{ $n+1 }}_remarks" class="w-full h-36 py-1 px-3 leading-8 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-sm outline-none text-gray-700 transition-colors duration-200 ease-in-out">{{ $outsourcings[$n]->remarks }}</textarea>
                                             </td>
                                         </tr>
                                         <tr class="w-full flex">
+                                            @if($n == 0)
                                             <th class="w-40 py-1 flex">見積もり添付</th>
                                             <th class="py-1">：</th>
+                                            @endif
                                             <td class="w-full block py-1">
-                                                <input type="file" name="comp{{ $n+1 }}_file1" value="{{ $outsourcings[$n]->comp_file1 }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-sm outline-none text-gray-700 py-1 leading-8 transition-colors duration-200 ease-in-out" />
-                                                <input type="file" name="comp{{ $n+1 }}_file2" value="{{ $outsourcings[$n]->comp_file2 }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-sm outline-none text-gray-700 py-1 leading-8 transition-colors duration-200 ease-in-out" />
-                                                <input type="file" name="comp{{ $n+1 }}_file3" value="{{ $outsourcings[$n]->comp_file3 }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-sm outline-none text-gray-700 py-1 leading-8 transition-colors duration-200 ease-in-out" />
+                                                <input type="file" name="comp{{ $n+1 }}_file1" class="w-full" />
+                                                <input type="hidden" name="old_comp{{ $n+1 }}_file1" value="{{ $outsourcings[$n]->comp_file1 }}" />
+                                                <input type="file" name="comp{{ $n+1 }}_file2" class="w-full" />
+                                                <input type="hidden" name="old_comp{{ $n+1 }}_file1" value="{{ $outsourcings[$n]->comp_file1 }}" />
+                                                <input type="file" name="comp{{ $n+1 }}_file3" class="w-full" />
+                                                <input type="hidden" name="old_comp{{ $n+1 }}_file1" value="{{ $outsourcings[$n]->comp_file1 }}" />
                                             </td>
                                         </tr>
-                                        </tbody>
-                                        @endfor
+                                    </tbody>
+                                    @endfor
                                 </table>
                             </div>
                         </div>

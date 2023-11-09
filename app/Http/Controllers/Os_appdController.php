@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
 use App\Models\Work;
 use App\Models\Admin;
 use App\Models\User;
@@ -156,38 +158,12 @@ class Os_appdController extends Controller
     public function update(Request $request, $id)
     {
         $os_appd = Os_appd::findOrFail($id);
-
-        // 競合先更新
-        $Outsourcings = Outsourcing::where('os_appd_id', '=', $id)->get();
-        foreach ($Outsourcings as $Outsourcing) :
-            if ($Outsourcing->id === $request->outsourcing1_id) {
-                for ($i = 1; $i < 4; $i++) {
-                    $filecheck = $request->comp.$i._file1;
-                    dd($filecheck);
-                    if (!is_null($request->comp1_file1)) {
-                        $directory = 'public/outsourcing/' . $request->outsourcing1_id;
-                        Storage::makeDirectory($directory);
-                        $file_name = $request->file('file')->getClientOriginalName();
-                        $request->file('file')->storeAs($directory, $file_name);
-                        $request->file = $file_name;
-                        $request->filepath = 'storage/outsourcing/' . $request->application_id . '/' . $file_name;
-                    }
-                    $Outsourcing->comp_name = $request->comp1_name;
-                    $Outsourcing->comp_price_incl = $request->comp1_price_incl;
-                    $Outsourcing->comp_price_exc = $request->comp1_price_exc;
-                    $Outsourcing->comp_remarks = $request->comp1_remarks;
-                    $Outsourcing->comp_file1 = $request->comp1_file1;
-                    $Outsourcing->comp_file2 = $request->comp1_file2;
-                    $Outsourcing->comp_file3 = $request->comp1_file3;
-                };
-            }
-        endforeach;
-
         $os_appd->work_id = $request->work_id;
         $os_appd->comment = $request->comment;
         $os_appd->spec = $request->spec;
 
         $os_appd->order_recipient = $request->order_recipient;
+        $Outsourcings = Outsourcing::where('os_appd_id', '=', $id)->get();
         if (!is_null($Outsourcings)) {
             foreach ($Outsourcings as $Outsourcing) :
                 if ($request->order_recipient === $Outsourcing->id) {
@@ -204,6 +180,42 @@ class Os_appdController extends Controller
         $os_appd->appd1_id = $request->appd1_id;
         $os_appd->appd2_id = $request->appd2_id;
         $os_appd->save();
+
+        // 競合先更新
+        $comp1 = Outsourcing::where('id', '=', $request->outsourcing1_id)->first();
+        // if (!is_null($request->comp1_file1)) {
+        //     $directory = 'public/outsourcing/' . $request->outsourcing1_id;
+        //     Storage::makeDirectory($directory);
+        //     $file_name = $request->comp1_file1('file')->getClientOriginalName();
+        //     $request->comp1_file1('file')->storeAs($directory, $file_name);
+        //     $request->comp1_file1 = $file_name;
+        //     $request->comp1_file1path = '/storage/outsourcing/' . $request->application_id . '/' . $file_name;
+        // }
+        $comp1->comp_name = $request->comp1_name;
+        $comp1->comp_price_incl = $request->comp1_price_incl;
+        $comp1->comp_price_exc = $request->comp1_price_exc;
+        $comp1->comp_remarks = $request->comp1_remarks;
+        // $comp1->comp_file1 = $request->comp1_file1;
+        // $comp1->comp_file1path = $request->comp1_file1path;
+        // $comp1->comp_file2 = $request->comp1_file2;
+        // $comp1->comp_file2path = $request->comp1_file2path;
+        // $comp1->comp_file3 = $request->comp1_file3;
+        // $comp1->comp_file3path = $request->comp1_file3path;
+        $comp1->save();
+
+        $comp2 = Outsourcing::where('id', '=', $request->outsourcing2_id)->first();
+        $comp2->comp_name = $request->comp2_name;
+        $comp2->comp_price_incl = $request->comp2_price_incl;
+        $comp2->comp_price_exc = $request->comp2_price_exc;
+        $comp2->comp_remarks = $request->comp2_remarks;
+        $comp2->save();
+
+        $comp3 = Outsourcing::where('id', '=', $request->outsourcing3_id)->first();
+        $comp3->comp_name = $request->comp3_name;
+        $comp3->comp_price_incl = $request->comp3_price_incl;
+        $comp3->comp_price_exc = $request->comp3_price_exc;
+        $comp3->comp_remarks = $request->comp3_remarks;
+        $comp3->save();
 
         $user = Auth::user();
         if ($user->roll === 'admin') {
