@@ -100,7 +100,7 @@ $array_articles = ["", "出力のみ", "文字校【軽】500", "文字校【重
                                                 <input type="hidden" name="old_filepath" value="{{ $workspec->filepath }}">
                                             </div>
                                             <div class="flex w-full">
-                                                <p class="w-3/4 text-start">現ファイル：{{ $workspec->file }}</p>
+                                                <p class="w-3/4 ps-2 text-start">添付：{{ $workspec->file }}</p>
                                                 <div class="w-1/4">
                                                     <input type="checkbox" name="delete" class="w-5 h-5 me-1 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 p-1 leading-8 transition-colors duration-200 ease-in-out">削除
                                                 </div>

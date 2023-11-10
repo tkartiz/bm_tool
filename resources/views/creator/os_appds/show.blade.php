@@ -210,62 +210,82 @@
                         </div>
                         <div class="w-full mt-10 mx-auto overflow-auto">
                             <table class="w-full flex">
+                                <?php $num = 0; ?>
                                 @foreach($outsourcings as $outsourcing)
-                                <tbody class="w-1/3">
-                                    <tr class="w-full flex">
-                                        <th class="w-40 py-1 flex bg-gray-100">発注先</th>
-                                        <th class="py-1 bg-gray-100">：</th>
-                                        <td class="w-full py-1 block text-center items-center pl-4 dark:border-gray-700 bg-gray-100">
-                                            @if($outsourcing->id == $os_appd->order_recipient)
-                                            <p class="font-medium">＊</p>
+                                    @if($num == 0)
+                                    @if($outsourcing->id == $os_appd->order_recipient)<tbody class="w-5/12 p-3 border-double border-4 border-indigo-600 rounded">
+                                    @else<tbody class="w-5/12 p-3">@endif
+                                @else
+                                    @if($outsourcing->id == $os_appd->order_recipient)<tbody class="w-3/12 p-3 border-double border-4 border-indigo-600 rounded">
+                                    @else<tbody class="w-3/12 p-3">@endif
+                                @endif
+                                    <tr class="w-full flex bg-gray-100">
+                                        @if($num == 0)
+                                        <th class="w-40 py-1 flex">発注先</th>
+                                        <th class="w-32 py-1">：</th>
+                                        @endif
+                                        <td class="w-full py-1 items-center pl-4 dark:border-gray-700">
+                                            @if($outsourcing->id == $os_appd->order_recipient)<p class="font-medium">＊</p>
+                                            @else<p class="font-medium">&nbsp;</p>
                                             @endif
                                         </td>
                                     </tr>
                                     <tr class="w-full flex">
+                                        @if($num == 0)
                                         <th class="w-40 py-1 flex">競合先</th>
-                                        <th class="py-1">：</th>
-                                        <td class="w-full py-1">
-                                            @if(!is_null($outsourcing->comp_name)){{ $outsourcing->comp_name }}
-                                            @endif
-                                        </td>
+                                        <th class="w-28 py-1">：</th>
+                                        @endif
+                                        <td class="w-full py-1">{{ $outsourcing->comp_name }}</td>
                                     </tr>
-                                    <tr class="w-full flex">
-                                        <th class="w-40 py-1 flex bg-gray-100">金額（税抜）</th>
-                                        <th class="py-1 bg-gray-100">：</th>
-                                        <td class="w-full block py-1 bg-gray-100">
+                                    <tr class="w-full flex bg-gray-100">
+                                        @if($num == 0)
+                                        <th class="w-40 py-1 flex">金額（税抜）</th>
+                                        <th class="w-28 py-1">：</th>
+                                        @endif
+                                        <td class="w-full block py-1">
                                             @if(!is_null($outsourcing->comp_price_exc))￥{{ $outsourcing->comp_price_exc }}
                                             @endif
                                         </td>
                                     </tr>
                                     <tr class="w-full flex">
+                                        @if($num == 0)
                                         <th class="w-40 py-1 flex">金額（税込）</th>
-                                        <th class="py-1">：</th>
+                                        <th class="w-28 py-1">：</th>
+                                        @endif
                                         <td class="w-full block py-1">
                                             @if(!is_null($outsourcing->comp_price_incl))￥{{ $outsourcing->comp_price_incl }}
                                             @endif
                                         </td>
                                     </tr>
-                                    <tr class="w-full flex">
-                                        <th class="w-40 py-1 flex bg-gray-100">備考</th>
-                                        <th class="py-1 bg-gray-100">：</th>
-                                        <td class="w-full block py-1 bg-gray-100">
-                                            @if(!is_null($outsourcing->remarks)){{ $outsourcing->remarks }}
-                                            @endif
-                                        </td>
+                                    <tr class="w-full flex bg-gray-100">
+                                        @if($num == 0)
+                                        <th class="w-40 py-1 flex">備考</th>
+                                        <th class="w-28 py-1">：</th>
+                                        @endif
+                                        <td class="w-full block py-1">{!! nl2br($outsourcing->comp_remarks) !!}</td>
                                     </tr>
                                     <tr class="w-full flex">
+                                        @if($num == 0)
                                         <th class="w-40 py-1 flex">見積もり</th>
-                                        <th class="py-1">：</th>
-                                        <td class="w-full block p-3 py-1">
-                                            @if(!is_null($outsourcing->comp_file1))<p>{{ $outsourcing->comp_file1 }}</p>
+                                        <th class="w-28 py-1">：</th>
+                                        @endif
+                                        <td class="w-full block py-1">
+                                            @if(!is_null($outsourcing->comp_file1))<a href="{{ $outsourcing->comp_file1path }}" target="_BLANK">
+                                                <p>{{ $outsourcing->comp_file1 }}</p>
+                                            </a>
                                             @endif
-                                            @if(!is_null($outsourcing->comp_file2))<p>{{ $outsourcing->comp_file2 }}</p>
+                                            @if(!is_null($outsourcing->comp_file2))<a href="{{ $outsourcing->comp_file2path }}" target="_BLANK">
+                                                <p>{{ $outsourcing->comp_file2 }}</p>
+                                            </a>
                                             @endif
-                                            @if(!is_null($outsourcing->comp_file3))<p>{{ $outsourcing->comp_file3 }}</p>
+                                            @if(!is_null($outsourcing->comp_file3))<a href="{{ $outsourcing->comp_file3path }}" target="_BLANK">
+                                                <p>{{ $outsourcing->comp_file3 }}</p>
+                                            </a>
                                             @endif
                                         </td>
                                     </tr>
                                 </tbody>
+                                <?php $num += 1; ?>
                                 @endforeach
                             </table>
                         </div>

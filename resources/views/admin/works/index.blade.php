@@ -76,13 +76,15 @@
                                                     @endif
                                                 </td>
                                                 <td class="px-2 py-3">
-                                                    @if($work->outsourcing == 1)
-                                                    <a href="{{ route('admin.os_appds.show', $work->os_appd_id) }}" class="text-blue-500 underline">あり</a>
-                                                    @elseif($work->outsourcing == 0)
-                                                    <p>なし</p>
+                                                    @if($work->outsourcing == 1)<p>あり</p>
+                                                    @elseif($work->outsourcing == 0)<p>なし</p>
                                                     @endif
                                                 </td>
-                                                <td class="px-2 py-3">{{ $work->os_appd_id }}</td>
+                                                <td class="px-2 py-3">
+                                                    @if($work->outsourcing == 1)
+                                                    <a href="{{ route('admin.os_appds.show', $work->os_appd_id) }}" class="text-blue-500 underline">{{ $work->os_appd_id }}</a>
+                                                    @endif
+                                                </td>
                                                 <td class="px-2 py-3">{{ $work->started_at }}</td>
                                                 <td class="px-2 py-3">{{ $work->completed_at }}</td>
                                                 <td class="px-2 py-3">{{ $work->price_exc }}</td>

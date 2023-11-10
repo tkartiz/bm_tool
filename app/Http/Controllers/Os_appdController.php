@@ -148,6 +148,10 @@ class Os_appdController extends Controller
         }
     }
 
+    public function filesave()
+    {
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -157,17 +161,160 @@ class Os_appdController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // 競合先更新 ↓
+        $comp[0] = Outsourcing::where('id', '=', $request->outsourcing1_id)->first();
+        $comp[1] = Outsourcing::where('id', '=', $request->outsourcing2_id)->first();
+        $comp[2] = Outsourcing::where('id', '=', $request->outsourcing3_id)->first();
+
+        for ($i = 0; $i < 9; $i++) {
+            if ($i < 3) {
+                $j = 0;
+                if ($request->file('file') != null && array_key_exists($i, $request->file('file'))) {
+                    $directory = 'public/outsourcing/' . $comp[$j]->id;
+                    Storage::makeDirectory($directory);
+                    $file_name = $request->file('file')[$i]->getClientOriginalName();
+                    $file_path = '/storage/outsourcing/' . $comp[$j]->id . '/' . $file_name;
+                    $request->file('file')[$i]->storeAs($directory, $file_name);
+
+                    if ($i == 0) {
+                        $comp[$j]->comp_file1 = $file_name;
+                        $comp[$j]->comp_file1path = $file_path;
+                    } elseif ($i == 1) {
+                        $comp[$j]->comp_file2 = $file_name;
+                        $comp[$j]->comp_file2path = $file_path;
+                    } elseif ($i == 2) {
+                        $comp[$j]->comp_file3 = $file_name;
+                        $comp[$j]->comp_file3path = $file_path;
+                    }
+                }
+
+                if ($request->delFile0 == 'on' && !is_null($comp[$j]->comp_file1path)) {
+                    $file_path = 'public/outsourcing/' . $comp[$j]->id . '/' . $comp[$j]->comp_file1;
+                    Storage::delete($file_path);
+                    $comp[$j]->comp_file1 = null;
+                    $comp[$j]->comp_file1path = null;
+                } elseif ($request->delFile1 == 'on' && !is_null($comp[$j]->comp_file2path)) {
+                    $file_path = 'public/outsourcing/' . $comp[$j]->id . '/' . $comp[$j]->comp_file2;
+                    Storage::delete($file_path);
+                    $comp[$j]->comp_file2 = null;
+                    $comp[$j]->comp_file2path = null;
+                } elseif ($request->delFile2 == 'on' && !is_null($comp[$j]->comp_file3path)) {
+                    $file_path = 'public/outsourcing/' . $comp[$j]->id . '/' . $comp[$j]->comp_file3;
+                    Storage::delete($file_path);
+                    $comp[$j]->comp_file3 = null;
+                    $comp[$j]->comp_file3path = null;
+                }
+            } elseif ($i > 2 && $i < 6) {
+                $j = 1;
+                if ($request->file('file') != null && array_key_exists($i, $request->file('file'))) {
+                    $directory = 'public/outsourcing/' . $comp[$j]->id;
+                    Storage::makeDirectory($directory);
+                    $file_name = $request->file('file')[$i]->getClientOriginalName();
+                    $file_path = '/storage/outsourcing/' . $comp[$j]->id . '/' . $file_name;
+                    $request->file('file')[$i]->storeAs($directory, $file_name);
+
+                    if ($i == 3) {
+                        $comp[$j]->comp_file1 = $file_name;
+                        $comp[$j]->comp_file1path = $file_path;
+                    } elseif ($i == 4) {
+                        $comp[$j]->comp_file2 = $file_name;
+                        $comp[$j]->comp_file2path = $file_path;
+                    } elseif ($i == 5) {
+                        $comp[$j]->comp_file3 = $file_name;
+                        $comp[$j]->comp_file3path = $file_path;
+                    }
+                }
+
+                if ($request->delFile3 == 'on' && !is_null($comp[$j]->comp_file1path)) {
+                    $file_path = 'public/outsourcing/' . $comp[$j]->id . '/' . $comp[$j]->comp_file1;
+                    Storage::delete($file_path);
+                    $comp[$j]->comp_file1 = null;
+                    $comp[$j]->comp_file1path = null;
+                } elseif ($request->delFile4 == 'on' && !is_null($comp[$j]->comp_file2path)) {
+                    $file_path = 'public/outsourcing/' . $comp[$j]->id . '/' . $comp[$j]->comp_file2;
+                    Storage::delete($file_path);
+                    $comp[$j]->comp_file2 = null;
+                    $comp[$j]->comp_file2path = null;
+                } elseif ($request->delFile5 == 'on' && !is_null($comp[$j]->comp_file3path)) {
+                    $file_path = 'public/outsourcing/' . $comp[$j]->id . '/' . $comp[$j]->comp_file3;
+                    Storage::delete($file_path);
+                    $comp[$j]->comp_file3 = null;
+                    $comp[$j]->comp_file3path = null;
+                }
+            } else {
+                $j = 2;
+                if ($request->file('file') != null && array_key_exists($i, $request->file('file'))) {
+                    $directory = 'public/outsourcing/' . $comp[$j]->id;
+                    Storage::makeDirectory($directory);
+                    $file_name = $request->file('file')[$i]->getClientOriginalName();
+                    $file_path = '/storage/outsourcing/' . $comp[$j]->id . '/' . $file_name;
+                    $request->file('file')[$i]->storeAs($directory, $file_name);
+
+                    if ($i == 6) {
+                        $comp[$j]->comp_file1 = $file_name;
+                        $comp[$j]->comp_file1path = $file_path;
+                    } elseif ($i == 7) {
+                        $comp[$j]->comp_file2 = $file_name;
+                        $comp[$j]->comp_file2path = $file_path;
+                    } elseif ($i == 8) {
+                        $comp[$j]->comp_file3 = $file_name;
+                        $comp[$j]->comp_file3path = $file_path;
+                    }
+                }
+
+                if ($request->delFile6 == 'on' && !is_null($comp[$j]->comp_file1path)) {
+                    $file_path = 'public/outsourcing/' . $comp[$j]->id . '/' . $comp[$j]->comp_file1;
+                    Storage::delete($file_path);
+                    $comp[$j]->comp_file1 = null;
+                    $comp[$j]->comp_file1path = null;
+                } elseif ($request->delFile7 == 'on' && !is_null($comp[$j]->comp_file2path)) {
+                    $file_path = 'public/outsourcing/' . $comp[$j]->id . '/' . $comp[$j]->comp_file2;
+                    Storage::delete($file_path);
+                    $comp[$j]->comp_file2 = null;
+                    $comp[$j]->comp_file2path = null;
+                } elseif ($request->delFile8 == 'on' && !is_null($comp[$j]->comp_file3path)) {
+                    $file_path = 'public/outsourcing/' . $comp[$j]->id . '/' . $comp[$j]->comp_file3;
+                    Storage::delete($file_path);
+                    $comp[$j]->comp_file3 = null;
+                    $comp[$j]->comp_file3path = null;
+                }
+            }
+        }
+
+        for ($j = 0; $j < 3; $j++) {
+            if ($j == 0) {
+                $comp[$j]->comp_name = $request->comp1_name;
+                $comp[$j]->comp_price_incl = $request->comp1_price_incl;
+                $comp[$j]->comp_price_exc = $request->comp1_price_exc;
+                $comp[$j]->comp_remarks = $request->comp1_remarks;
+                $comp[$j]->save();
+            } elseif ($j == 1) {
+                $comp[$j]->comp_name = $request->comp2_name;
+                $comp[$j]->comp_price_incl = $request->comp2_price_incl;
+                $comp[$j]->comp_price_exc = $request->comp2_price_exc;
+                $comp[$j]->comp_remarks = $request->comp2_remarks;
+                $comp[$j]->save();
+            } else {
+                $comp[$j]->comp_name = $request->comp3_name;
+                $comp[$j]->comp_price_incl = $request->comp3_price_incl;
+                $comp[$j]->comp_price_exc = $request->comp3_price_exc;
+                $comp[$j]->comp_remarks = $request->comp3_remarks;
+                $comp[$j]->save();
+            }
+        }
+        // 競合先更新 ↑
+
+        // 外注承認申請書更新　↓
         $os_appd = Os_appd::findOrFail($id);
         $os_appd->work_id = $request->work_id;
         $os_appd->comment = $request->comment;
         $os_appd->spec = $request->spec;
 
         $os_appd->order_recipient = $request->order_recipient;
-        $Outsourcings = Outsourcing::where('os_appd_id', '=', $id)->get();
+        $Outsourcings = Outsourcing::where([['os_appd_id', $id], ['comp_name', '!=', null]])->get();
         if (!is_null($Outsourcings)) {
             foreach ($Outsourcings as $Outsourcing) :
-                if ($request->order_recipient === $Outsourcing->id) {
-                    $os_appd->order_recipient = $Outsourcing->id;
+                if ((int)$request->order_recipient === $Outsourcing->id) {
                     $os_appd->price_exc = $Outsourcing->comp_price_exc;
                     $os_appd->price_incl = $Outsourcing->comp_price_incl;
                 }
@@ -176,74 +323,13 @@ class Os_appdController extends Controller
 
         $os_appd->price_list = $request->price_list;
         $os_appd->remarks = $request->remarks;
-        $os_appd->comp_num = $request->comp_num;
+
+        $os_appd->comp_num = count($Outsourcings);
+
         $os_appd->appd1_id = $request->appd1_id;
         $os_appd->appd2_id = $request->appd2_id;
         $os_appd->save();
-
-        // 競合先更新
-        $comp1 = Outsourcing::where('id', '=', $request->outsourcing1_id)->first();
-        $comp2 = Outsourcing::where('id', '=', $request->outsourcing2_id)->first();
-        $comp3 = Outsourcing::where('id', '=', $request->outsourcing3_id)->first();
-
-        dd($request->file('file'));
-
-        for ($i = 0; $i < 9; $i++) {
-            if (!is_null($request->file('file')[$i])) {
-                $directory = 'public/outsourcing/' . $request->outsourcing1_id;
-                Storage::makeDirectory($directory);
-                $file_name = $request->file('file')[$i]->getClientOriginalName();
-                $request->file('file')[$i]->storeAs($directory, $file_name[$i]);
-                $file_path = '/storage/outsourcing/' . $request->application_id . '/' . $file_name[$i];
-
-                if ($i == 0) {
-                    $comp1->comp_file1 = $file_name;
-                    $comp1->comp_file1path = $file_path;
-                } elseif ($i == 1) {
-                    $comp1->comp_file2 = $file_name;
-                    $comp1->comp_file2path = $file_path;
-                } elseif ($i == 2) {
-                    $comp1->comp_file3 = $file_name;
-                    $comp1->comp_file3path = $file_path;
-                } elseif ($i == 3) {
-                    $comp2->comp_file1 = $file_name;
-                    $comp2->comp_file1path = $file_path;
-                } elseif ($i == 4) {
-                    $comp2->comp_file2 = $file_name;
-                    $comp2->comp_file2path = $file_path;
-                } elseif ($i == 5) {
-                    $comp2->comp_file3 = $file_name;
-                    $comp2->comp_file3path = $file_path;
-                } elseif ($i == 6) {
-                    $comp3->comp_file1 = $file_name;
-                    $comp3->comp_file1path = $file_path;
-                } elseif ($i == 7) {
-                    $comp3->comp_file2 = $file_name;
-                    $comp3->comp_file2path = $file_path;
-                } elseif ($i == 8) {
-                    $comp3->comp_file3 = $file_name;
-                    $comp3->comp_file3path = $file_path;
-                }
-            }
-        }
-
-        $comp1->comp_name = $request->comp1_name;
-        $comp1->comp_price_incl = $request->comp1_price_incl;
-        $comp1->comp_price_exc = $request->comp1_price_exc;
-        $comp1->comp_remarks = $request->comp1_remarks;
-        $comp1->save();
-
-        $comp2->comp_name = $request->comp2_name;
-        $comp2->comp_price_incl = $request->comp2_price_incl;
-        $comp2->comp_price_exc = $request->comp2_price_exc;
-        $comp2->comp_remarks = $request->comp2_remarks;
-        $comp2->save();
-
-        $comp3->comp_name = $request->comp3_name;
-        $comp3->comp_price_incl = $request->comp3_price_incl;
-        $comp3->comp_price_exc = $request->comp3_price_exc;
-        $comp3->comp_remarks = $request->comp3_remarks;
-        $comp3->save();
+        // 外注承認申請書更新　↑
 
         $user = Auth::user();
         if ($user->roll === 'admin') {
