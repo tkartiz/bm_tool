@@ -41,7 +41,7 @@
                                     <thead>
                                         <tr>
                                             <th class="pe-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                制作物番号</th>
+                                                仕様番号</th>
                                             <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 サイズ</th>
                                             <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
@@ -93,24 +93,23 @@
                                     <table class="table-auto w-full text-center whitespace-no-wrap">
                                         <thead>
                                             <tr>
-                                                <th rowspan="2" class="pe-2 py-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                <th rowspan="2" class="w-40 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     制作者名</th>
-                                                <th rowspan="2" class="px-2 py-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                <th rowspan="2" class="w-24 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     外注有無</th>
-                                                <th rowspan="2" class="px-2 py-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                <th class="w-28 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     外注承認ID</th>
-                                                <th class="px-2 pt-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                <th class="w-28 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     制作開始日</th>
-                                                <th class="px-2 pt-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                <th class="w-28 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     金額（税抜）</th>
-                                                <th rowspan="2" class="ps-2 py-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
+                                                <th rowspan="2" class="p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
                                                     連絡事項</th>
                                             </tr>
                                             <tr>
-                                                <th class="px-2 pb-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    制作完了日</th>
-                                                <th class="px-2 pb-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
-                                                    金額（税込）</th>
+                                                <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">外注承認状況</th>
+                                                <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">制作完了日</th>
+                                                <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">金額（税込）</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -134,21 +133,33 @@
                                                     </select>
                                                     <p></p>
                                                 </td>
-                                                <td rowspan="2" class="px-2 py-2 w-20">{{ $work->os_appd_id }}</td>
+                                                <td class="px-2 pt-1 w-20">{{ $work->os_appd_id }}</td>
                                                 <td class="px-2 pt-2 w-24">
                                                     <input type="date" name="started_at" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                 </td>
 
-                                                <td class="px-2 pt-2 w-28">{{ $work->price_incl }}</td>
+                                                <td class="px-2 pt-1 w-28">
+                                                    @if(!is_null($work->price_exc))￥{{ number_format($work->price_exc) }}@endif
+                                                </td>
                                                 <td rowspan="2" class="ps-2 py-2 w-auto">
                                                     <textarea name="message" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 h-24 text-base outline-none text-gray-700 resize-none leading-6 transition-colors duration-200 ease-in-out">{{ $work->message }}</textarea>
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td class="px-2 pb-1">
+                                                    @if(!is_null($work->os_appd_id) && $os_appd->id === $work->os_appd_id)
+                                                    @if(!is_null($os_appd->requested_at) && !is_null($os_appd->appd2_appd_at))<span class="p-1 text-white text-sm bg-indigo-700 rounded-xl">承認済</span>
+                                                    @elseif(!is_null($os_appd->requested_at) && is_null($os_appd->appd2_appd_at))<span class="p-1 text-white text-sm bg-indigo-500 rounded-xl">申請中</span>
+                                                    @else<span class="p-1 text-white text-sm bg-pink-500 rounded-xl">申請前</span>
+                                                    @endif
+                                                    @endif
+                                                </td>
                                                 <td class="px-2 pb-2 w-24">
                                                     <input type="date" name="completed_at" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 leading-8 transition-colors duration-200 ease-in-out">
                                                 </td>
-                                                <td class="px-2 pb-2 w-28">{{ $work->price_exc }}</td>
+                                                <td class="px-2 pb-1">
+                                                    @if(!is_null($work->price_incl))￥{{ number_format($work->price_incl) }}@endif
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>

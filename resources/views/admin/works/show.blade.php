@@ -87,24 +87,23 @@
                                 <table class="table-auto w-full text-center whitespace-no-wrap">
                                     <thead>
                                         <tr>
-                                            <th rowspan="2" class="pe-2 py-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                            <th rowspan="2" class="w-28 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 制作者名</th>
-                                            <th rowspan="2" class="px-2 py-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                            <th rowspan="2" class="w-12 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 外注有無</th>
-                                            <th rowspan="2" class="px-2 py-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                            <th class="w-28 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 外注承認ID</th>
-                                            <th class="px-2 pt-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                            <th class="w-28 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 制作開始日</th>
-                                            <th class="px-2 pt-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                            <th class="w-28 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 金額（税抜）</th>
-                                            <th rowspan="2" class="ps-2 py-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
+                                            <th rowspan="2" class="p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
                                                 連絡事項</th>
                                         </tr>
                                         <tr>
-                                            <th class="px-2 pb-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                制作完了日</th>
-                                            <th class="px-2 pb-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
-                                                金額（税込）</th>
+                                            <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">外注承認状況</th>
+                                            <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">制作完了日</th>
+                                            <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">金額（税込）</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -117,20 +116,30 @@
                                                 </p>
                                             </td>
                                             <td rowspan="2" class="px-2 pt-1 w-24">
-                                                @if($work->outsourcing == 1)
-                                                <a href="{{ route('admin.os_appds.index', $work->os_appd_id) }}" class="text-blue-500 underline">あり</a>
-                                                @elseif($work->outsourcing == 0)
-                                                <p>なし</p>
+                                                @if($work->outsourcing == 1)<p>あり</p>
+                                                @elseif($work->outsourcing == 0)<p>なし</p>
                                                 @endif
                                             </td>
-                                            <td rowspan="2" class="px-2 py-2 w-20">{{ $work->os_appd_id }}</td>
+                                            <td class="px-2 pt-1 w-20">
+                                                @if($work->outsourcing == 1)
+                                                <a href="{{ route('admin.os_appds.show', $work->os_appd_id) }}" class="text-blue-500 underline">{{ $work->os_appd_id }}</a>
+                                                @endif
+                                            </td>
                                             <td class="px-2 pt-2 w-24">{{ $work->started_at }}</td>
-                                            <td class="px-2 pt-2 w-28">{{ $work->price_incl }}</td>
-                                            <td rowspan="2" class="ps-2 py-2 w-auto">{{ $work->message }}</td>
+                                            <td class="px-2 pt-2 w-28">@if(!is_null($work->price_exc))￥{{ $work->price_exc }}@endif</td>
+                                            <td rowspan="2" class="ps-2 py-2 w-auto text-start text-sm">{!! nl2br($work->message) !!}</td>
                                         </tr>
                                         <tr>
+                                            <td class="px-2 pb-1">
+                                                @if(!is_null($work->os_appd_id) && $os_appd->id === $work->os_appd_id)
+                                                @if(!is_null($os_appd->requested_at) && !is_null($os_appd->appd2_appd_at))<span class="p-1 text-white text-sm bg-indigo-700 rounded-xl">承認済</span>
+                                                @elseif(!is_null($os_appd->requested_at) && is_null($os_appd->appd2_appd_at))<span class="p-1 text-white text-sm bg-indigo-500 rounded-xl">申請中</span>
+                                                @else<span class="p-1 text-white text-sm bg-pink-500 rounded-xl">申請前</span>
+                                                @endif
+                                                @endif
+                                            </td>
                                             <td class="px-2 pb-2 w-24">{{ $work->completed_at }}</td>
-                                            <td class="px-2 pb-2 w-28">{{ $work->price_exc }}</td>
+                                            <td class="px-2 pb-2 w-28">@if(!is_null($work->price_incl))￥{{ $work->price_incl }}@endif</td>
                                         </tr>
                                     </tbody>
                                 </table>

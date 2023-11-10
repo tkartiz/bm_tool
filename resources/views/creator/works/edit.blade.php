@@ -93,24 +93,23 @@
                                     <table class="table-auto w-full text-center whitespace-no-wrap">
                                         <thead>
                                             <tr>
-                                                <th rowspan="2" class="w-40 pe-2 py-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                <th rowspan="2" class="w-40 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     制作者名</th>
-                                                <th rowspan="2" class="w-24 px-2 py-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                <th rowspan="2" class="w-24 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     外注有無</th>
-                                                <th rowspan="2" class="w-28 px-2 py-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                <th class="w-28 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     外注承認ID</th>
-                                                <th class="w-28 px-2 pt-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                <th class="w-28 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     制作開始日</th>
-                                                <th class="w-28 px-2 pt-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                <th class="w-28 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     金額（税抜）</th>
-                                                <th rowspan="2" class="ps-2 py-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
+                                                <th rowspan="2" class="p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
                                                     連絡事項</th>
                                             </tr>
                                             <tr>
-                                                <th class="px-2 pb-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    制作完了日</th>
-                                                <th class="px-2 pb-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
-                                                    金額（税込）</th>
+                                                <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">外注承認状況</th>
+                                                <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">制作完了日</th>
+                                                <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">金額（税込）</th>
                                             </tr>
                                         </thead>
                                         <tbody>

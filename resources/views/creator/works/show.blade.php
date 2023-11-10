@@ -101,7 +101,7 @@
                                                 連絡事項</th>
                                         </tr>
                                         <tr>
-                                        <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">外注承認状況</th>
+                                            <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">外注承認状況</th>
                                             <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">制作完了日</th>
                                             <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">金額（税込）</th>
                                         </tr>
@@ -126,8 +126,8 @@
                                                 @endif
                                             </td>
                                             <td class="px-2 pt-1 w-24">{{ $work->started_at }}</td>
-                                            <td class="px-2 pt-1 w-28">{{ $work->price_incl }}</td>
-                                            <td rowspan="2" class="ps-2 py-2 w-auto">{{ $work->message }}</td>
+                                            <td class="px-2 pt-2 w-28">@if(!is_null($work->price_exc))￥{{ $work->price_exc }}@endif</td>
+                                            <td rowspan="2" class="ps-2 py-2 w-auto text-start text-sm">{!! nl2br($work->message) !!}</td>
                                         </tr>
                                         <tr>
                                             <td class="px-2 pb-1">
@@ -139,7 +139,7 @@
                                                 @endif
                                             </td>
                                             <td class="px-2 pb-1 w-24">{{ $work->completed_at }}</td>
-                                            <td class="px-2 pb-1 w-28">{{ $work->price_exc }}</td>
+                                            <td class="px-2 pb-2 w-28">@if(!is_null($work->price_incl))￥{{ $work->price_incl }}@endif</td>
                                         </tr>
                                     </tbody>
                                 </table>
