@@ -136,6 +136,11 @@ class WorkspecController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'quantity' => 'integer',
+            'unit' => 'string',
+        ]);
+        
         $workspec = Workspec::findOrFail($id);
         $workspec->size = $request->size;
         $workspec->format = $request->format;

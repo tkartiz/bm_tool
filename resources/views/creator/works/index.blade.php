@@ -12,88 +12,93 @@
                     <section class="text-gray-600 body-font">
                         <div class="container px-5 py-8 mx-auto">
                             <x-flash-message status="session('status')" />
-                            <div class="px-5 py-2 bg-white mb-5">
-                                <div class="p-2 w-full mx-auto overflow-auto">
-                                    <table class="table-auto w-full text-center whitespace-no-wrap">
-                                        <thead>
-                                            <tr>
-                                                <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    削除</th>
-                                                <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    編集</th>
-                                                <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    番号</th>
-                                                <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    制作物番号</th>
-                                                <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    制作者名</th>
-                                                <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    外注有無</th>
-                                                <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    外注承認ID</th>
-                                                <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    制作開始日</th>
-                                                <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    制作完了日</th>
-                                                <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                    金額（税抜）</th>
-                                                <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
-                                                    金額（税込）</th>
-                                                <th class="px-2 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
-                                                    連絡事項</th>
-                                            </tr>
-                                        </thead>
-                                        @foreach($works as $work)
-                                        <tbody>
-                                            <tr>
-                                                <td class="px-2 py-3">
-                                                    <form id="delete_{{ $work->id }}" method="post" action="{{ route('creator.works.destroy', $work->id) }}">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <a href="#" data-id="{{ $work->id }}" onclick="deleteWork(this)" class="w-full p-1 text-center">
-                                                            <span class="i-fa6-regular-trash-can bg-red-500 w-5 h-5"></span>
-                                                        </a>
-                                                    </form>
-                                                </td>
-                                                <td class="px-2 py-3">
-                                                    <a href="{{ route('creator.works.edit', $work->id) }}" class="w-full p-1 text-center">
-                                                        <span class="i-fa6-regular-pen-to-square bg-blue-500 w-5 h-5"></span>
-                                                    </a>
-                                                </td>
-                                                <td class="px-2 py-3"><a href="{{ route('creator.works.show', $work->id) }}" class="text-blue-500 underline">{{ $work->id }}</a></td>
-                                                <td class=" px-2 py-3">{{ $work->work_spec_id }}</td>
-                                                <td class="px-2 py-3">
-                                                    @if($user->roll == 'admin')
-                                                    @foreach($creators as $creator)
-                                                    @if($creator->id == $work->creator_id)
-                                                    <p>{{ $creator->name }}</p>
+                            <div class="w-full mx-auto overflow-auto">
+                                <table class="table-auto w-full text-center whitespace-no-wrap">
+                                    <thead class="border">
+                                        <tr>
+                                            <th rowspan="2" class="w-16 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                編集</th>
+                                            <th rowspan="2" class="w-24 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                制作物番号</th>
+                                            <th rowspan="2" class="w-24 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                仕様番号</th>
+                                            <th rowspan="2" class="w-28 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                制作者名</th>
+                                            <th rowspan="2" class="w-12 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                外注有無</th>
+                                            <th class="w-28 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                外注承認ID</th>
+                                            <th class="w-28 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                制作開始日</th>
+                                            <th class="w-28 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                金額（税抜）</th>
+                                            <th rowspan="2" class="w-80 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">
+                                                連絡事項</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">外注承認状況</th>
+                                            <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">制作完了日</th>
+                                            <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">金額（税込）</th>
+                                        </tr>
+                                    </thead>
+                                    @foreach($works as $work)
+                                    <tbody class="border">
+                                        <tr>
+                                            <td rowspan="2" class="p-2">
+                                                <a href="{{ route('creator.works.edit', $work->id) }}" class="w-full p-1 text-center">
+                                                    <span class="i-fa6-regular-pen-to-square bg-blue-500 w-5 h-5"></span>
+                                                </a>
+                                            </td>
+                                            <td rowspan="2" class="p-2"><a href="{{ route('creator.works.show', $work->id) }}" class="text-blue-500 underline">{{ $work->id }}</a></td>
+                                            <td rowspan="2" class="p-2">{{ $work->work_spec_id }}</td>
+                                            <td rowspan="2" class="p-2">
+                                                @if($user->roll == 'admin')
+                                                @foreach($creators as $creator)
+                                                @if($creator->id == $work->creator_id)
+                                                <p>{{ $creator->name }}</p>
+                                                @endif
+                                                @endforeach
+                                                @elseif($user->roll == 'creator')
+                                                @if($creator->id == $work->creator_id)
+                                                <p>{{ $creator->name }}</p>
+                                                @endif
+                                                @endif
+                                            </td>
+                                            <td rowspan="2" class="p-2">
+                                                @if($work->outsourcing == 1)<p>あり</p>
+                                                @elseif($work->outsourcing == 0)<p>なし</p>
+                                                @endif
+                                            </td>
+                                            <td class="px-2 pt-1">
+                                                @if($work->outsourcing == 1)
+                                                <a href="{{ route('creator.os_appds.show', $work->os_appd_id) }}" class="text-blue-500 underline">{{ $work->os_appd_id }}</a>
+                                                @endif
+                                            </td>
+                                            <td class="px-2 pt-1">{{ $work->started_at }}</td>
+                                            <td class="px-2 pt-1">
+                                                @if(!is_null($work->price_exc))￥{{ number_format($work->price_exc) }}@endif
+                                            </td>
+                                            <td rowspan="2" class="p-2 text-start text-sm">{!! nl2br($work->message) !!}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-2 pb-1">
+                                                @foreach($os_appds as $os_appd)
+                                                    @if(!is_null($work->os_appd_id) && $os_appd->id === $work->os_appd_id)
+                                                        @if(!is_null($os_appd->requested_at) && !is_null($os_appd->appd2_appd_at))<span class="p-1 text-white text-sm bg-indigo-700 rounded-xl">承認済</span>
+                                                        @elseif(!is_null($os_appd->requested_at) && is_null($os_appd->appd2_appd_at))<span class="p-1 text-white text-sm bg-indigo-500 rounded-xl">申請中</span>
+                                                        @else<span class="p-1 text-white text-sm bg-pink-500 rounded-xl">申請前</span>
+                                                        @endif
                                                     @endif
-                                                    @endforeach
-                                                    @elseif($user->roll == 'creator')
-                                                    @if($creator->id == $work->creator_id)
-                                                    <p>{{ $creator->name }}</p>
-                                                    @endif
-                                                    @endif
-                                                </td>
-                                                <td class="px-2 py-3">
-                                                    @if($work->outsourcing == 1)<p>あり</p>
-                                                    @elseif($work->outsourcing == 0)<p>なし</p>
-                                                    @endif
-                                                </td>
-                                                <td class="px-2 py-3">
-                                                    @if($work->outsourcing == 1)
-                                                    <a href="{{ route('creator.os_appds.show', $work->os_appd_id) }}" class="text-blue-500 underline">{{ $work->os_appd_id }}</a>
-                                                    @endif
-                                                </td>
-                                                <td class="px-2 py-3">{{ $work->started_at }}</td>
-                                                <td class="px-2 py-3">{{ $work->completed_at }}</td>
-                                                <td class="px-2 py-3">{{ $work->price_exc }}</td>
-                                                <td class="px-2 py-3">{{ $work->price_incl }}</td>
-                                            </tr>
-                                        </tbody>
-                                        @endforeach
-                                    </table>
-                                </div>
+                                                @endforeach
+                                            </td>
+                                            <td class="px-2 pb-1">{{ $work->completed_at }}</td>
+                                            <td class="px-2 pb-1">
+                                                @if(!is_null($work->price_incl))￥{{ number_format($work->price_incl) }}@endif
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    @endforeach
+                                </table>
                             </div>
                         </div>
                     </section>
@@ -101,12 +106,4 @@
             </div>
         </div>
     </div>
-    <script>
-        function deleteWork(e) {
-            'use strict';
-            if (confirm('本当に削除してもいいですか？')) {
-                document.getElementById('delete_' + e.dataset.id).submit();
-            }
-        }
-    </script>
 </x-app-layout>

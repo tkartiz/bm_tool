@@ -100,6 +100,11 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'subject' => 'required|string|max:50',
+            'desired_dlvd_at' => 'required|date',
+        ]);
+
         $application = Application::findOrFail($id);
         $application->user_id = $request->user_id;
         $application->subject = $request->subject;

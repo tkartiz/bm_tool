@@ -71,12 +71,12 @@
                             <dl class="flex">
                                 <dt class="w-32 py-1 flex">見積金額（税抜）<p class="ms-auto">：</p>
                                 </dt>
-                                <dd class="ps-3 py-1">￥{{ $application->price_incl }}</dd>
+                                <dd class="ps-3 py-1">@if(!is_null($application->price_incl))￥{{ number_format($application->price_incl) }}@endif</dd>
                             </dl>
                             <dl class="flex">
                                 <dt class="w-32 py-1 flex">見積金額（税込）<p class="ms-auto">：</p>
                                 </dt>
-                                <dd class="ps-3 py-1">￥{{ $application->price_exc }}</dd>
+                                <dd class="ps-3 py-1">@if(!is_null($application->price_exc))￥{{ number_format($application->price_exc) }}@endif</dd>
                             </dl>
                         </div>
                     </div>
@@ -90,6 +90,11 @@
                                     <th class="w-32"></th>
                                     <th class="w-6"></th>
                                     <td class="w-auto"></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-start">外注承認番号</th>
+                                    <th>：</th>
+                                    <td>{{ $os_appd->id }}</td>
                                 </tr>
                                 <tr>
                                     <th class="text-start">コメント</th>
@@ -147,12 +152,12 @@
                                 <tr>
                                     <th class="text-start">金額（税抜）</th>
                                     <th>：</th>
-                                    <td>￥{{ $os_appd->price_exc }}</td>
+                                    <td>@if(!is_null($os_appd->price_exc))￥{{ number_format($os_appd->price_exc) }}@endif</td>
                                 </tr>
                                 <tr>
                                     <th class="text-start">金額（税込）</th>
                                     <th>：</th>
-                                    <td>￥{{ $os_appd->price_incl }}</td>
+                                    <td>@if(!is_null($os_appd->price_incl))￥{{ number_format($os_appd->price_incl) }}@endif</td>
                                 </tr>
                                 <tr>
                                     <th class="text-start">価格明細</th>
@@ -215,6 +220,8 @@
                                     </tr>
                                 </table>
                             </div>
+
+                            <x-auth-validation-errors class="mt-4 mx-auto" :errors="$errors" />
                             <div class="w-full mt-20 mx-auto overflow-auto">
                                 <table class="w-full flex">
                                     @for($n = 0; $n < 3 ; $n++) @if($n==0)<tbody class="w-5/12">
@@ -249,7 +256,7 @@
                                                 <th class="py-1">：</th>
                                                 @endif
                                                 <td class="w-full block py-1">
-                                                    <input type="text" name="comp{{ $n+1 }}_price_exc" value="{{ $outsourcings[$n]->comp_price_exc }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                    <input type="integer" name="comp{{ $n+1 }}_price_exc" value="{{ $outsourcings[$n]->comp_price_exc }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                                 </td>
                                             </tr>
                                             <tr class="w-full flex">
@@ -258,7 +265,7 @@
                                                 <th class="py-1">：</th>
                                                 @endif
                                                 <td v-if=" !== null" class="w-full block py-1">
-                                                    <input type="text" name="comp{{ $n+1 }}_price_incl" value="{{ $outsourcings[$n]->comp_price_incl }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                                                    <input type="integer" name="comp{{ $n+1 }}_price_incl" value="{{ $outsourcings[$n]->comp_price_incl }}" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                                                 </td>
                                             </tr>
                                             <tr class="w-full flex">
@@ -278,15 +285,15 @@
                                                 <td class="w-full block py-1">
                                                     <div class="mb-2">
                                                         <input type="file" name="file[]" multiple="multiple" class="w-full" />
-                                                        <p class="ps-2">現(&nbsp;削除<input type="checkbox" name="delFile{{ $n*3 }}" multiple="multiple" class="w-4 h-4 ms-1 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 p-1 leading-8 transition-colors duration-200 ease-in-out">&nbsp;)：&nbsp;{{ $outsourcings[$n]->comp_file1 }}</p>
+                                                        <p class="ps-2">現(&nbsp;削除<input type="checkbox" name="delFile{{ $n*3 }}" class="w-4 h-4 ms-1 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 p-1 leading-8 transition-colors duration-200 ease-in-out">&nbsp;)：&nbsp;{{ $outsourcings[$n]->comp_file1 }}</p>
                                                     </div>
                                                     <div class="mb-2">
                                                         <input type="file" name="file[]" multiple="multiple" class="w-full" />
-                                                        <p class="ps-2">現(&nbsp;削除<input type="checkbox" name="delFile{{ $n*3+1 }}" multiple="multiple" class="w-4 h-4 ms-1 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 p-1 leading-8 transition-colors duration-200 ease-in-out">&nbsp;)：&nbsp;{{ $outsourcings[$n]->comp_file2 }}</p>
+                                                        <p class="ps-2">現(&nbsp;削除<input type="checkbox" name="delFile{{ $n*3+1 }}" class="w-4 h-4 ms-1 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 p-1 leading-8 transition-colors duration-200 ease-in-out">&nbsp;)：&nbsp;{{ $outsourcings[$n]->comp_file2 }}</p>
                                                     </div>
                                                     <div class="mb-2">
                                                         <input type="file" name="file[]" multiple="multiple" class="w-full" />
-                                                        <p class="ps-2">現(&nbsp;削除<input type="checkbox" name="delFile{{ $n*3+2 }}" multiple="multiple" class="w-4 h-4 ms-1 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 p-1 leading-8 transition-colors duration-200 ease-in-out">&nbsp;)：&nbsp;{{ $outsourcings[$n]->comp_file3 }}</p>
+                                                        <p class="ps-2">現(&nbsp;削除<input type="checkbox" name="delFile{{ $n*3+2 }}" class="w-4 h-4 ms-1 bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 p-1 leading-8 transition-colors duration-200 ease-in-out">&nbsp;)：&nbsp;{{ $outsourcings[$n]->comp_file3 }}</p>
                                                     </div>
                                                 </td>
                                             </tr>

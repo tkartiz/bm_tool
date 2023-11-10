@@ -24,7 +24,6 @@ class WorkController extends Controller
     public function index()
     {
         $user = Auth::user();
-
         if ($user->roll === 'admin') {
             return view('admin.works.index', [
                 'works' => Work::all(),
@@ -123,6 +122,7 @@ class WorkController extends Controller
         if ($user->roll === 'admin') {
             $Work2Workspec = Workspec::find($work->work_spec_id);
             $Workspec2Application = Application::find($Work2Workspec->application_id);
+            $Work2Os_appd = Os_appd::where('work_id', '=', $work->id)->first();
             $client = User::where('id', '=', $Workspec2Application->user_id)->first();
             $creators = Creator::all();
 
@@ -130,6 +130,7 @@ class WorkController extends Controller
                 'work' => $work,
                 'workspec' => $Work2Workspec,
                 'application' => $Workspec2Application,
+                'os_appd' => $Work2Os_appd,
                 'client' => $client,
                 'creators' => $creators,
                 'user' => $user,
@@ -137,6 +138,7 @@ class WorkController extends Controller
         } elseif($user->roll === 'creator') {
             $Work2Workspec = Workspec::find($work->work_spec_id);
             $Workspec2Application = Application::find($Work2Workspec->application_id);
+            $Work2Os_appd = Os_appd::where('work_id', '=', $work->id)->first();
             $client = User::where('id', '=', $Workspec2Application->user_id)->first();
             $creators = Creator::where('id', '=', $user->id)->first();
 
@@ -144,6 +146,7 @@ class WorkController extends Controller
                 'work' => $work,
                 'workspec' => $Work2Workspec,
                 'application' => $Workspec2Application,
+                'os_appd' => $Work2Os_appd,
                 'client' => $client,
                 'creators' => $creators,
                 'user' => $user,
