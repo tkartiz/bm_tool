@@ -207,9 +207,21 @@
                                     <td class="h-20 border border-slate-300 text-xl">{{ $user->name }}</td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 text-sm">承認可(日付)/否</td>
-                                    <td class="border border-slate-300 text-sm">承認可(日付)/否</td>
-                                    <td class="border border-slate-300 text-sm">申請日付</td>
+                                    <td class="border border-slate-300 text-sm">
+                                        @if(!is_null($os_appd->appd2_appd_at)){{ $os_appd->appd2_appd_at }}
+                                        @else <p>承認可(日付)/否</p>
+                                        @endif
+                                    </td>
+                                    <td class="border border-slate-300 text-sm">
+                                        @if(!is_null($os_appd->appd1_appd_at)){{ $os_appd->appd1_appd_at }}
+                                        @else <p>承認可(日付)/否</p>
+                                        @endif
+                                    </td>
+                                    <td class="border border-slate-300 text-sm">
+                                        @if(!is_null($os_appd->requested_at)){{ $os_appd->requested_at }}
+                                        @else <p>申請日付</p>
+                                        @endif
+                                    </td>
                                 </tr>
                             </table>
                         </div>

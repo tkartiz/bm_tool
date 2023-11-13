@@ -17,8 +17,6 @@
                                     <thead class="border">
                                         <tr>
                                             <th rowspan="2" class="w-16 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
-                                                削除</th>
-                                            <th rowspan="2" class="w-16 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 編集</th>
                                             <th rowspan="2" class="w-24 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 制作物番号</th>
@@ -28,7 +26,7 @@
                                                 制作者名</th>
                                             <th rowspan="2" class="w-12 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 外注有無</th>
-                                            <th class="w-28 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                            <th colspan="3" class="w-30 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 外注承認ID</th>
                                             <th class="w-28 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                 制作開始日</th>
@@ -38,7 +36,9 @@
                                                 連絡事項</th>
                                         </tr>
                                         <tr>
-                                            <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">外注承認状況</th>
+                                            <th class="px-0 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">承認<br>申請</th>
+                                            <th class="px-0 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">部長<br>承認</th>
+                                            <th class="px-0 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">社長<br>承認</th>
                                             <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">制作完了日</th>
                                             <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">金額（税込）</th>
                                         </tr>
@@ -46,15 +46,6 @@
                                     @foreach($works as $work)
                                     <tbody class="border">
                                         <tr>
-                                            <td rowspan="2" class="p-2">
-                                                <form id="delete_{{ $work->id }}" method="post" action="{{ route('admin.works.destroy', $work->id) }}">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <a href="#" data-id="{{ $work->id }}" onclick="deleteWork(this)" class="w-full p-1 text-center">
-                                                        <span class="i-fa6-regular-trash-can bg-red-500 w-5 h-5"></span>
-                                                    </a>
-                                                </form>
-                                            </td>
                                             <td rowspan="2" class="p-2">
                                                 <a href="{{ route('admin.works.edit', $work->id) }}" class="w-full p-1 text-center">
                                                     <span class="i-fa6-regular-pen-to-square bg-blue-500 w-5 h-5"></span>
@@ -80,7 +71,7 @@
                                                 @elseif($work->outsourcing == 0)<p>なし</p>
                                                 @endif
                                             </td>
-                                            <td class="px-2 pt-1">
+                                            <td colspan="3" class="px-2 pt-1">
                                                 @if($work->outsourcing == 1)
                                                 <a href="{{ route('admin.os_appds.show', $work->os_appd_id) }}" class="text-blue-500 underline">{{ $work->os_appd_id }}</a>
                                                 @endif
@@ -92,13 +83,24 @@
                                             <td rowspan="2" class="p-2 text-start text-sm">{!! nl2br($work->message) !!}</td>
                                         </tr>
                                         <tr>
-                                            <td class="px-2 pb-1">
+                                            <td class="w-10 pb-1">
                                                 @foreach($os_appds as $os_appd)
-                                                @if(!is_null($work->os_appd_id) && $os_appd->id === $work->os_appd_id)
-                                                @if(!is_null($os_appd->requested_at) && !is_null($os_appd->appd2_appd_at))<span class="p-1 text-white text-sm bg-indigo-700 rounded-xl">承認済</span>
-                                                @elseif(!is_null($os_appd->requested_at) && is_null($os_appd->appd2_appd_at))<span class="p-1 text-white text-sm bg-indigo-500 rounded-xl">申請中</span>
-                                                @else<span class="p-1 text-white text-sm bg-pink-500 rounded-xl">申請前</span>
+                                                @if($os_appd->id === $work->os_appd_id && !is_null($os_appd->requested_at))
+                                                <p class="w-10 p-1 text-white text-sm bg-indigo-300 rounded">済</p>
                                                 @endif
+                                                @endforeach
+                                            </td>
+                                            <td class="w-10 pb-1">
+                                                @foreach($os_appds as $os_appd)
+                                                @if($os_appd->id === $work->os_appd_id && !is_null($os_appd->appd1_approval))
+                                                <p class="w-10 p-1 text-white text-sm bg-indigo-500 rounded">済</p>
+                                                @endif
+                                                @endforeach
+                                            </td>
+                                            <td class="w-10 pb-1">
+                                                @foreach($os_appds as $os_appd)
+                                                @if($os_appd->id === $work->os_appd_id && !is_null($os_appd->appd2_approval))
+                                                <p class="w-10 p-1 text-white text-sm bg-indigo-700 rounded">済</p>
                                                 @endif
                                                 @endforeach
                                             </td>
