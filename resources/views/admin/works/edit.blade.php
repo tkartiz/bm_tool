@@ -97,7 +97,7 @@
                                                     制作者名</th>
                                                 <th rowspan="2" class="w-24 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     外注有無</th>
-                                                <th class="w-28 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                                                <th colspan="3" class="w-28 p-2 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     外注承認ID</th>
                                                 <th class="w-28 px-2 pt-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                                                     制作開始日</th>
@@ -107,7 +107,9 @@
                                                     連絡事項</th>
                                             </tr>
                                             <tr>
-                                                <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">外注承認状況</th>
+                                                <th class="px-0 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">承認<br>申請</th>
+                                                <th class="px-0 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">部長<br>承認</th>
+                                                <th class="px-0 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">社長<br>承認</th>
                                                 <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">制作完了日</th>
                                                 <th class="px-2 pb-1 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br">金額（税込）</th>
                                             </tr>
@@ -137,7 +139,7 @@
                                                     </select>
                                                     <p></p>
                                                 </td>
-                                                <td class="px-2 pt-1 w-20">{{ $work->os_appd_id }}</td>
+                                                <td colspan="3" class="px-2 pt-1">{{ $work->os_appd_id }}</td>
                                                 <td class="px-2 pt-2 w-24">
                                                     <input type="date" name="started_at" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                                 </td>
@@ -150,12 +152,19 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="px-2 pb-1">
-                                                    @if(!is_null($work->os_appd_id) && $os_appd->id === $work->os_appd_id)
-                                                    @if(!is_null($os_appd->requested_at) && !is_null($os_appd->appd2_appd_at))<span class="p-1 text-white text-sm bg-indigo-700 rounded-xl">承認済</span>
-                                                    @elseif(!is_null($os_appd->requested_at) && is_null($os_appd->appd2_appd_at))<span class="p-1 text-white text-sm bg-indigo-500 rounded-xl">申請中</span>
-                                                    @else<span class="p-1 text-white text-sm bg-pink-500 rounded-xl">申請前</span>
+                                                <td class="w-10 pb-1">
+                                                    @if(!is_null($work->os_appd_id) && $os_appd->id === $work->os_appd_id && !is_null($os_appd->requested_at))
+                                                    <p class="w-10 p-1 text-white text-sm bg-indigo-300 rounded">済</p>
                                                     @endif
+                                                </td>
+                                                <td class="w-10 pb-1">
+                                                    @if(!is_null($work->os_appd_id) && $os_appd->id === $work->os_appd_id && !is_null($os_appd->appd1_approval))
+                                                    <p class="w-10 p-1 text-white text-sm bg-indigo-500 rounded">済</p>
+                                                    @endif
+                                                </td>
+                                                <td class="w-10 pb-1">
+                                                    @if(!is_null($work->os_appd_id) && $os_appd->id === $work->os_appd_id && !is_null($os_appd->appd2_approval))
+                                                    <p class="w-10 p-1 text-white text-sm bg-indigo-700 rounded">済</p>
                                                     @endif
                                                 </td>
                                                 <td class="px-2 pb-2 w-24">

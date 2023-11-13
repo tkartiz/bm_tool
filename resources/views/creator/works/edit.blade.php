@@ -153,17 +153,17 @@
                                             </tr>
                                             <tr>
                                                 <td class="w-10 pb-1">
-                                                    @if($os_appd->id === $work->os_appd_id && !is_null($os_appd->requested_at))
+                                                    @if(!is_null($work->os_appd_id) && $os_appd->id === $work->os_appd_id && !is_null($os_appd->requested_at))
                                                     <p class="w-10 p-1 text-white text-sm bg-indigo-300 rounded">済</p>
                                                     @endif
                                                 </td>
                                                 <td class="w-10 pb-1">
-                                                    @if($os_appd->id === $work->os_appd_id && !is_null($os_appd->appd1_approval))
+                                                    @if(!is_null($work->os_appd_id) && $os_appd->id === $work->os_appd_id && !is_null($os_appd->appd1_approval))
                                                     <p class="w-10 p-1 text-white text-sm bg-indigo-500 rounded">済</p>
                                                     @endif
                                                 </td>
                                                 <td class="w-10 pb-1">
-                                                    @if($os_appd->id === $work->os_appd_id && !is_null($os_appd->appd2_approval))
+                                                    @if(!is_null($work->os_appd_id) && $os_appd->id === $work->os_appd_id && !is_null($os_appd->appd2_approval))
                                                     <p class="w-10 p-1 text-white text-sm bg-indigo-700 rounded">済</p>
                                                     @endif
                                                 </td>
