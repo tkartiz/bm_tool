@@ -372,7 +372,10 @@
                             <div class="w-2/5 p-2 text-center text-white bg-red-200 border-0 focus:outline-none">却下する</div>
                             @endif
                             <a href="{{ route('admin.works.index') }}" class="w-1/5">
-                                <div class="w-full p-2 btn text-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-r-xl">戻る</div>
+                                <div class="w-full p-2 btn text-center text-white bg-pink-700 border-0 focus:outline-none hover:bg-pink-600">制作物一覧へ</div>
+                            </a>
+                            <a href="{{ route('admin.os_appds.index') }}" class="w-1/5">
+                                <div class="w-full p-2 btn text-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded-r-xl">外注申請一覧へ</div>
                             </a>
                         </div>
                     </section>

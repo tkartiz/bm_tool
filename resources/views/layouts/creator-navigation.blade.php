@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}（制作者用）
                     </x-nav-link>
                     <x-nav-link :href="route('creator.works.index')" :active="request()->routeIs('creator.works.index')">
-                        申請書一覧
+                        制作物一覧<br>（制作者用）
                     </x-nav-link>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                 {{ __('Dashboard') }}（制作者用）
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('creator.works.index')" :active="request()->routeIs('creator.works.index')">
-                申請書一覧
+                制作物一覧
             </x-responsive-nav-link>
         </div>
 

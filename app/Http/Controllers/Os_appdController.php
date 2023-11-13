@@ -26,7 +26,26 @@ class Os_appdController extends Controller
      */
     public function index()
     {
-        // 
+        $user = Auth::user();
+        if ($user->roll === 'admin') {
+            return view('admin.os_appds.index', [
+                'works' => Work::all(),
+                'workspecs' => Workspec::all(),
+                'applications' => Application::all(),
+                'os_appds' => Os_appd::all(),
+                'creators' => Creator::all(),
+                'user' => $user,
+            ]);
+        } elseif ($user->roll === 'creator') {
+            return view('creator.os_appds.index', [
+                'works' => Work::where('creator_id', '=', $user->id)->get(),
+                'workspecs' => Workspec::all(),
+                'applications' => Application::all(),
+                'os_appds' => Os_appd::all(),
+                'creator' => Creator::where('id', '=', $user->id)->first(),
+                'user' => $user,
+            ]);
+        };
     }
 
     /**

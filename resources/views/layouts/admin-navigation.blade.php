@@ -15,8 +15,11 @@
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.works.index')" :active="request()->routeIs('admin.works.index')">
-                        申請書一覧
+                    <x-nav-link :href="route('admin.works.index')" :active="request()->routeIs('admin.works.index')" class="text-center">
+                        制作物一覧<br>（制作管理者用）
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.os_appds.index')" :active="request()->routeIs('admin.works.index')" class="text-center">
+                        外注承認申請一覧<br>（制作管理者用）
                     </x-nav-link>
                 </div>
             </div>
@@ -68,8 +71,11 @@
             <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                 {{ __('Dashboard') }}（制作管理者用）
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('admin.works.index')" :active="request()->routeIs('admin.works.index')">
-                申請書一覧
+            <x-responsive-nav-link :href="route('admin.works.index')" :active="request()->routeIs('admin.works.index')" class="text-center">
+                制作物一覧<br>（制作管理者用）
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.os_appds.index')" :active="request()->routeIs('admin.works.index')" class="text-center">
+                外注承認申請一覧<br>（制作管理者用）
             </x-responsive-nav-link>
         </div>
 
