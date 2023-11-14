@@ -48,7 +48,7 @@
                                     <tbody class="border">
                                         <tr>
                                             <td rowspan="3" class="px-2 pt-1">
-                                                <a href="{{ route('admin.os_appds.show', $work->os_appd_id) }}" class="text-blue-500 underline">{{ $work->os_appd_id }}</a>
+                                                <a href="{{ route('creator.os_appds.show', $work->os_appd_id) }}" class="text-blue-500 underline">{{ $work->os_appd_id }}</a>
                                             </td>
                                             <td rowspan="3" class="p-2">{{ $work->creator_name }}</td>
                                             <td rowspan="3" class="px-2 pt-1 text-start">{!! nl2br($work->os_comment) !!}</td>
@@ -57,13 +57,13 @@
                                             <td class="px-2 pt-1">
                                                 @if(!is_null($work->os_price_exc))￥{{ number_format($work->os_price_exc) }}@endif
                                             </td>
-                                            <td rowspan="3" class="w-10 pb-1 text-center">
+                                            <td rowspan="3" class="w-10 pb-1">
                                                 <p>ー</p>
                                                 @if(!is_null($work->os_requested_at))
                                                 <p class="w-10 p-1 text-white text-sm bg-indigo-300 rounded">済</p>
                                                 @endif
                                             </td>
-                                            <td rowspan="3" class="w-10 pb-1 text-center">
+                                            <td rowspan="3" class="w-10 pb-1">
                                                 @foreach($admins as $admin)
                                                 @if($admin->id === $work->appd1_id){{ $admin->name }}@endif
                                                 @endforeach
@@ -71,7 +71,7 @@
                                                 <p class="w-10 p-1 text-white text-sm bg-indigo-500 rounded">済</p>
                                                 @endif
                                             </td>
-                                            <td rowspan="3" class="w-10 pb-1 text-center">
+                                            <td rowspan="3" class="w-10 pb-1">
                                                 @foreach($admins as $admin)
                                                 @if($admin->id === $work->appd2_id){{ $admin->name }}@endif
                                                 @endforeach
