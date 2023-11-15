@@ -79,13 +79,7 @@ class WorkspecController extends Controller
             'work_spec_id' => $workspec->id,
         ]);
 
-        // 親の申請書の制作物点数を更新する
-        $id = $request->application_id;
-        $workspecs = Workspec::where('application_id', '=', $id)->get();
-        $works_quantity = count($workspecs);
-        $Workspec2Application = Application::find($id);
-        $Workspec2Application->works_quantity = $works_quantity;
-        $Workspec2Application->save();
+        Common::countWorks($request->application_id); // 親の申請書の制作物点数を更新する
 
         $user = Auth::user();
         if ($user->roll == 'creator') {
@@ -147,13 +141,12 @@ class WorkspecController extends Controller
         // 選択されたファイル情報よりファイルを削除/アップロード/維持してパスを保存する
 
         if ($request->delete == "on") {
-            Common::delFile($request, "application");
+            Common::delFile($request, "application"); // 旧ファイル(old_file)は削除する
             $request->file = null;
             $request->filepath = null;
         } elseif (!is_null($request->file) && $request->delete == null) {
             Common::saveFile($request, "application");
-            // 旧ファイルは削除する
-            Common::delFile($request, "application");
+            Common::delFile($request, "application"); // 旧ファイル(old_file)は削除する
         } else {
             $request->file = $request->old_file;
             $request->filepath = $request->old_filepath;
@@ -165,12 +158,7 @@ class WorkspecController extends Controller
         $workspec->unit = $request->unit;
         $workspec->save();
 
-        // 親の申請書の制作物点数を更新する
-        $workspecs = Workspec::where('application_id', '=', $request->application_id)->get();
-        $works_quantity = count($workspecs);
-        $Workspec2Application = Application::find($request->application_id);
-        $Workspec2Application->works_quantity = $works_quantity;
-        $Workspec2Application->save();
+        Common::countWorks($request->application_id); // 親の申請書の制作物点数を更新する
 
         $user = Auth::user();
         if ($user->roll == 'creator') {
@@ -196,7 +184,6 @@ class WorkspecController extends Controller
         $application_id = $workspec->application_id;
 
         // 添付ファイルが存在したら削除
-
         if (!is_null($workspec->file)) {
             $deletefile = 'public/application/' . $workspec->application_id . '/' . $workspec->file;
             Storage::delete($deletefile);

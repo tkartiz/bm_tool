@@ -3,11 +3,23 @@
 namespace app\Libraries;
 
 use Illuminate\Support\Facades\Storage;
+use App\Models\Application;
+use App\Models\Workspec;
 use App\Models\Work;
 use App\Models\Outsourcing;
 
 class Common
 {
+    public static function countWorks($id)
+    {
+        // 親の申請書の制作物点数を更新する
+        $workspecs = Workspec::where('application_id', '=', $id)->get();
+        $works_quantity = count($workspecs);
+        $Workspec2Application = Application::find($id);
+        $Workspec2Application->works_quantity = $works_quantity;
+        $Workspec2Application->save();
+    }
+
     public static function WorksArray()
     {
         $works = Work::join('workspecs', function ($join) {
@@ -80,7 +92,7 @@ class Common
 
     public static function delFile($request, $kind)
     {
-        // $kind: application, outsourcing
+        // $kind: application
         $dir_pub_path = 'public/' . $kind . '/';
 
         $deletefile = $dir_pub_path . $request->application_id . '/' . $request->old_file;
