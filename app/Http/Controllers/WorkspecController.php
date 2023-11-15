@@ -11,6 +11,8 @@ use App\Models\Work;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+use App\Libraries\Common;
+
 class WorkspecController extends Controller
 {
     /**
@@ -50,12 +52,7 @@ class WorkspecController extends Controller
     {
         // 選択されたファイル情報よりファイルをアップロードしてパスを保存する
         if (!is_null($request->file)) {
-            $directory = 'public/application/' . $request->application_id;
-            Storage::makeDirectory($directory);
-            $file_name = $request->file('file')->getClientOriginalName();
-            $request->file('file')->storeAs($directory, $file_name);
-            $request->file = $file_name;
-            $request->filepath = '/storage/application/' . $request->application_id . '/' . $file_name;
+            Common::saveFile($request, "application");
         }
 
         $request->validate([
@@ -110,7 +107,7 @@ class WorkspecController extends Controller
      */
     public function show($id)
     {
-        dd('制作物内容参照画面です');
+        //
     }
 
     /**
@@ -150,20 +147,13 @@ class WorkspecController extends Controller
         // 選択されたファイル情報よりファイルを削除/アップロード/維持してパスを保存する
 
         if ($request->delete == "on") {
-            $deletefile = 'public/application/' . $request->application_id . '/' . $request->old_file;
-            Storage::delete($deletefile);
+            Common::delFile($request, "application");
             $request->file = null;
             $request->filepath = null;
         } elseif (!is_null($request->file) && $request->delete == null) {
-            $directory = 'public/application/' . $request->application_id;
-            Storage::makeDirectory($directory);
-            $file_name = $request->file('file')->getClientOriginalName();
-            $request->file('file')->storeAs($directory, $file_name);
-            $request->file = $file_name;
-            $request->filepath = '/storage/application/' . $request->application_id . '/' . $file_name;
+            Common::saveFile($request, "application");
             // 旧ファイルは削除する
-            $deletefile = 'public/application/' . $request->application_id . '/' . $request->old_file;
-            Storage::delete($deletefile);
+            Common::delFile($request, "application");
         } else {
             $request->file = $request->old_file;
             $request->filepath = $request->old_filepath;
