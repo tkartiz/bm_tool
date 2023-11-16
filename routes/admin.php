@@ -11,7 +11,9 @@ use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\WorkController;
+use App\Http\Controllers\WorkspecController;
 use App\Http\Controllers\Os_appdController;
 use App\Http\Controllers\OutsourcingController;
 
@@ -27,7 +29,13 @@ use App\Http\Controllers\OutsourcingController;
 */
 
 // アプリ用
+Route::resource('applications', ApplicationController::class)
+->middleware(['auth:admin']);
+
 Route::resource('works', WorkController::class)
+->middleware(['auth:admin']);
+
+Route::resource('workspecs', WorkspecController::class)
 ->middleware(['auth:admin']);
 
 Route::resource('os_appds', Os_appdController::class)

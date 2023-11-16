@@ -15,10 +15,13 @@
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" class="text-center">
                         {{ __('Dashboard') }}<br>制作管理者用）
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.applications.index')" :active="request()->routeIs('admin.applications.index')" class="text-center">
+                        申請書一覧<br>（制作管理者用）
+                    </x-nav-link>
                     <x-nav-link :href="route('admin.works.index')" :active="request()->routeIs('admin.works.index')" class="text-center">
                         制作物一覧<br>（制作管理者用）
                     </x-nav-link>
-                    <x-nav-link :href="route('admin.os_appds.index')" :active="request()->routeIs('admin.works.index')" class="text-center">
+                    <x-nav-link :href="route('admin.os_appds.index')" :active="request()->routeIs('admin.os_appds.index')" class="text-center">
                         外注承認申請一覧<br>（制作管理者用）
                     </x-nav-link>
                 </div>
@@ -70,6 +73,9 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                 {{ __('Dashboard') }}（制作管理者用）
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.applications.index')" :active="request()->routeIs('admin.applications.index')" class="text-center">
+                申請書一覧<br>（制作管理者用）
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('admin.works.index')" :active="request()->routeIs('admin.works.index')" class="text-center">
                 制作物一覧<br>（制作管理者用）

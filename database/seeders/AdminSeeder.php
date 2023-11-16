@@ -20,9 +20,17 @@ class AdminSeeder extends Seeder
         DB::table('admins')->insert([
             [
                 'roll' => 'admin',
-                'name' => 'artiz',
-                'affiliation' => 'デザイン部',
-                'email' => 'artiz@artiz.com',
+                'name' => '鷹嘴',
+                'affiliation' => '部長',
+                'email' => 'm.t@ffg.com',
+                'phone' => '01234567891',
+                'password' => Hash::make('password123'),
+            ],
+            [
+                'roll' => 'admin',
+                'name' => '松本',
+                'affiliation' => '社長',
+                'email' => 'y.m@ffg.com',
                 'phone' => '01234567891',
                 'password' => Hash::make('password123'),
             ]
