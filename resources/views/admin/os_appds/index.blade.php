@@ -58,25 +58,35 @@
                                                 @if(!is_null($work->os_price_exc))￥{{ number_format($work->os_price_exc) }}@endif
                                             </td>
                                             <td rowspan="3" class="w-10 pb-1 text-center">
-                                                <p>ー</p>
+                                                <p class="text-xs mb-0">{{ $work->creator_name }}</p>
                                                 @if(!is_null($work->os_requested_at))
-                                                <p class="w-10 p-1 text-white text-sm bg-indigo-300 rounded">済</p>
+                                                <p class="mx-auto w-10 p-1 text-white text-sm bg-indigo-300 rounded">済</p>
+                                                @else
+                                                <p class="mx-auto w-10 p-1 text-white text-sm bg-pink-200 rounded">未</p>
                                                 @endif
                                             </td>
                                             <td rowspan="3" class="w-10 pb-1 text-center">
                                                 @foreach($admins as $admin)
-                                                @if($admin->id === $work->appd1_id){{ $admin->name }}@endif
+                                                @if($admin->id === $work->appd1_id)
+                                                <p class="text-xs mb-0">{{ $admin->name }}</p>
+                                                @endif
                                                 @endforeach
                                                 @if(!is_null($work->appd1_approval))
-                                                <p class="w-10 p-1 text-white text-sm bg-indigo-500 rounded">済</p>
+                                                <p class="mx-auto w-10 p-1 text-white text-sm bg-indigo-500 rounded">済</p>
+                                                @else
+                                                <p class="mx-auto w-10 p-1 text-white text-sm bg-pink-200 rounded">未</p>
                                                 @endif
                                             </td>
                                             <td rowspan="3" class="w-10 pb-1 text-center">
                                                 @foreach($admins as $admin)
-                                                @if($admin->id === $work->appd2_id){{ $admin->name }}@endif
+                                                @if($admin->id === $work->appd2_id)
+                                                <p class="text-xs mb-0">{{ $admin->name }}</p>
+                                                @endif
                                                 @endforeach
                                                 @if(!is_null($work->appd2_approval))
-                                                <p class="w-10 p-1 text-white text-sm bg-indigo-700 rounded">済</p>
+                                                <p class="mx-auto w-10 p-1 text-white text-sm bg-indigo-700 rounded">済</p>
+                                                @else
+                                                <p class="mx-auto w-10 p-1 text-white text-sm bg-pink-200 rounded">未</p>
                                                 @endif
                                             </td>
                                         </tr>

@@ -39,7 +39,7 @@ Route::resource('outsourcings', OutsourcingController::class)
 
 Route::get('/', function () {
     return view('creator.welcome');
-});
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('creator.dashboard');

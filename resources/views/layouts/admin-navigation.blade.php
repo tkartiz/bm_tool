@@ -13,16 +13,16 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')" class="text-center">
-                        {{ __('Dashboard') }}<br>制作管理者用）
+                        {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('admin.applications.index')" :active="request()->routeIs('admin.applications.index')" class="text-center">
-                        申請書一覧<br>（制作管理者用）
+                        申請書一覧
                     </x-nav-link>
                     <x-nav-link :href="route('admin.works.index')" :active="request()->routeIs('admin.works.index')" class="text-center">
-                        制作物一覧<br>（制作管理者用）
+                        制作物一覧
                     </x-nav-link>
                     <x-nav-link :href="route('admin.os_appds.index')" :active="request()->routeIs('admin.os_appds.index')" class="text-center">
-                        外注承認申請一覧<br>（制作管理者用）
+                        外注承認申請一覧
                     </x-nav-link>
                 </div>
             </div>

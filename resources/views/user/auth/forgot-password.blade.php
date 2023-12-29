@@ -27,6 +27,10 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
+                <a class="me-auto underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('user.welcome') }}">
+                    {{ __('back to Welcome') }}
+                </a>
+
                 <x-button>
                     {{ __('Email Password Reset Link') }}
                 </x-button>

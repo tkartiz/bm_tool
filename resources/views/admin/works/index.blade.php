@@ -86,21 +86,27 @@
                                             <td class="w-10 pb-1">
                                                 @foreach($os_appds as $os_appd)
                                                 @if($os_appd->id === $work->os_appd_id && !is_null($os_appd->requested_at))
-                                                <p class="w-10 p-1 text-white text-sm bg-indigo-300 rounded">済</p>
+                                                <p class="mx-auto w-10 p-1 text-white text-sm bg-indigo-300 rounded">済</p>
+                                                @elseif($os_appd->id === $work->os_appd_id && is_null($os_appd->requested_at))
+                                                <p class="mx-auto w-10 p-1 text-white text-sm bg-pink-200 rounded">未</p>
                                                 @endif
                                                 @endforeach
                                             </td>
                                             <td class="w-10 pb-1">
                                                 @foreach($os_appds as $os_appd)
                                                 @if($os_appd->id === $work->os_appd_id && !is_null($os_appd->appd1_approval))
-                                                <p class="w-10 p-1 text-white text-sm bg-indigo-500 rounded">済</p>
+                                                <p class="mx-auto w-10 p-1 text-white text-sm bg-indigo-500 rounded">済</p>
+                                                @elseif($os_appd->id === $work->os_appd_id && is_null($os_appd->appd1_approval))
+                                                <p class="mx-auto w-10 p-1 text-white text-sm bg-pink-200 rounded">未</p>
                                                 @endif
                                                 @endforeach
                                             </td>
                                             <td class="w-10 pb-1">
                                                 @foreach($os_appds as $os_appd)
                                                 @if($os_appd->id === $work->os_appd_id && !is_null($os_appd->appd2_approval))
-                                                <p class="w-10 p-1 text-white text-sm bg-indigo-700 rounded">済</p>
+                                                <p class="mx-auto w-10 p-1 text-white text-sm bg-indigo-700 rounded">済</p>
+                                                @elseif($os_appd->id === $work->os_appd_id && is_null($os_appd->appd2_approval))
+                                                <p class="mx-auto w-10 p-1 text-white text-sm bg-pink-200 rounded">未</p>
                                                 @endif
                                                 @endforeach
                                             </td>
