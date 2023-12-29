@@ -31,7 +31,7 @@ Route::resource('contacts', ContactController::class)
 
 Route::get('/', function () {
     return view('user.welcome');
-});
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('user.dashboard');

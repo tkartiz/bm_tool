@@ -884,6 +884,9 @@ select {
 .mt-8 {
   margin-top: 2rem;
 }
+.me-auto {
+  margin-inline-end: auto;
+}
 .block {
   display: block;
 }
