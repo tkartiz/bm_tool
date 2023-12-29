@@ -71,7 +71,7 @@
                                                     <a href="#" data-id="{{ $application->id }}" onclick="applicatePost(this)" class="w-full p-1 text-center">
                                                         <span class="i-fa6-regular-envelope bg-black-500 w-5 h-5"></span>
                                                     </a>
-                                                    <input type="hidden" name="user_id" value="{{ $user }}">
+                                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
                                                     <input type="hidden" name="subject" value="{{ $application->subject }}">
                                                     <input type="hidden" name="works_quantity" value="{{ $application->works_quantity }}">
                                                     <input type="hidden" name="severity" value="{{ $application->severity }}">

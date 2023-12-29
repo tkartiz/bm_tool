@@ -136,7 +136,6 @@ class ApplicationController extends Controller
             $application->applicated_at = null;
         }
         $application->desired_dlvd_at = $request->desired_dlvd_at;
-
         $application->save();
 
         $user = Auth::user();

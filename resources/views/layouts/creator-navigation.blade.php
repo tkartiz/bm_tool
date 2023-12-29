@@ -13,13 +13,13 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('creator.dashboard')" :active="request()->routeIs('creator.dashboard')" class="text-center">
-                        {{ __('Dashboard') }}<br>制作者用）
+                        {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('creator.works.index')" :active="request()->routeIs('creator.works.index')" class="text-center">
-                        制作物一覧<br>（制作者用）
+                        制作物一覧
                     </x-nav-link>
                     <x-nav-link :href="route('creator.os_appds.index')" :active="request()->routeIs('creator.os_appds.index')" class="text-center">
-                        外注承認申請一覧<br>（制作者用）
+                        外注承認申請一覧
                     </x-nav-link>
                 </div>
             </div>
