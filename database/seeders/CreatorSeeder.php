@@ -19,7 +19,7 @@ class CreatorSeeder extends Seeder
     {
         DB::table('creators')->insert([
             [
-                'roll' => 'creator',
+                'role' => 'creator',
                 'name' => 'デザイナーCさん',
                 'affiliation' => 'デザイン部',
                 'email' => 'c@artiz.com',
@@ -27,7 +27,7 @@ class CreatorSeeder extends Seeder
                 'password' => Hash::make('password123'),
             ],
             [
-                'roll' => 'creator',
+                'role' => 'creator',
                 'name' => 'デザイナーDさん',
                 'affiliation' => 'デザイン部',
                 'email' => 'd@artiz.com',

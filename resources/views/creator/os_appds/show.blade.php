@@ -311,7 +311,7 @@
                             </div>
                         </div>
                         <div class="w-3/4 flex mx-auto my-10">
-                            @if($user->roll == "admin" && !is_null($work->os_requested_at) && $user->id == $work->appd1_id && $work->appd1_approval !== 1)
+                            @if($user->role == "admin" && !is_null($work->os_requested_at) && $user->id == $work->appd1_id && $work->appd1_approval !== 1)
                             <form id="approve_{{ $work->os_appd_id }}" method="POST" action="{{ route('creator.os_appds.update', $work->os_appd_id) }}" class="w-2/5">
                                 @csrf
                                 @method('PUT')
@@ -338,7 +338,7 @@
                                     <textarea name="appd1_comment" class="w-full border-red-500">{!! nl2br($work->appd1_comment) !!}</textarea>
                                 </div>
                             </form>
-                            @elseif($user->roll == "admin" && !is_null($work->os_requested_at) && $user->id == $work->appd2_id && $work->appd2_approval !== 1)
+                            @elseif($user->role == "admin" && !is_null($work->os_requested_at) && $user->id == $work->appd2_id && $work->appd2_approval !== 1)
                             <form id="approve_{{ $work->os_appd_id }}" method="POST" action="{{ route('creator.os_appds.update', $work->os_appd_id) }}" class="w-2/5">
                                 @csrf
                                 @method('PUT')
@@ -367,10 +367,10 @@
                                     <textarea name="appd2_comment" class="w-full border-red-500">{!! nl2br($work->appd2_comment) !!}</textarea>
                                 </div>
                             </form>
-                            @elseif($user->roll == "admin")
+                            @elseif($user->role == "admin")
                             <div class="w-2/5 p-2 text-center text-white bg-amber-200 border-0 focus:outline-none rounded-l-xl">承認する</div>
                             <div class="w-2/5 p-2 text-center text-white bg-red-200 border-0 focus:outline-none">却下する</div>
-                            @elseif($user->roll == "creator" && is_null($work->os_requested_at))
+                            @elseif($user->role == "creator" && is_null($work->os_requested_at))
                             <a href="{{ route('creator.os_appds.edit', $work->os_appd_id) }}" class="w-2/5 p-2 text-center text-white bg-indigo-500 border-0 focus:outline-none  hover:bg-indigo-600 rounded-l-xl">編集する</a>
                             <form id="request_{{ $work->os_appd_id }}" method="POST" action="{{ route('creator.os_appds.update', $work->os_appd_id) }}" class="w-2/5">
                                 @csrf

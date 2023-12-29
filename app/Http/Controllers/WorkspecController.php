@@ -82,7 +82,7 @@ class WorkspecController extends Controller
         Common::countWorks($request->application_id); // 親の申請書の制作物点数を更新する
 
         $user = Auth::user();
-        if ($user->roll == 'creator') {
+        if ($user->role == 'creator') {
             return redirect()
                 ->route('creator.workspecs.index', ['application' => $request->application_id])
                 ->with(['message' => '登録しました。', 'status' => 'info']);
@@ -161,7 +161,7 @@ class WorkspecController extends Controller
         Common::countWorks($request->application_id); // 親の申請書の制作物点数を更新する
 
         $user = Auth::user();
-        if ($user->roll == 'creator') {
+        if ($user->role == 'creator') {
             return redirect()
                 ->route('creator.workspecs.index', ['application' => $request->application_id])
                 ->with(['message' => '更新しました。', 'status' => 'info']);
@@ -201,7 +201,7 @@ class WorkspecController extends Controller
         $Workspec2Application->save();
 
         $user = Auth::user();
-        if ($user->roll == 'creator') {
+        if ($user->role == 'creator') {
             return redirect()
                 ->route('creator.workspecs.index', ['application' => $application_id])
                 ->with(['message' => '削除しました。', 'status' => 'alert']);

@@ -33,13 +33,13 @@ class Os_appdController extends Controller
         $admins = Admin::all();
         $works = Common::WorksArray(); // 共通関数を呼び出す
 
-        if ($user->roll === 'admin') {
+        if ($user->role === 'admin') {
             return view('admin.os_appds.index', [
                 'works' => $works,
                 'admins' => $admins,
                 'user' => $user,
             ]);
-        } elseif ($user->roll === 'creator') {
+        } elseif ($user->role === 'creator') {
             return view('creator.os_appds.index', [
                 'works' => $works->where('creator_id', '=', $user->id),
                 'admins' => $admins,
@@ -84,14 +84,14 @@ class Os_appdController extends Controller
         $Outsourcings = Outsourcing::all()
             ->where('os_appd_id', '=', $work->os_appd_id);
 
-        if ($user->roll === 'admin') {
+        if ($user->role === 'admin') {
             return view('admin.os_appds.show', [
                 'work' => $work,
                 'outsourcings' => $Outsourcings,
                 'admins' => $admins,
                 'user' => $user,
             ]);
-        } elseif ($user->roll === 'creator') {
+        } elseif ($user->role === 'creator') {
             return view('creator.os_appds.show', [
                 'work' => $work,
                 'outsourcings' => $Outsourcings,
@@ -127,7 +127,7 @@ class Os_appdController extends Controller
             $Outsourcings = Outsourcing::where('os_appd_id', '=', $os_appd->id)->get();
         }
 
-        if ($user->roll === 'admin') {
+        if ($user->role === 'admin') {
             return view('admin.os_appds.edit', [
                 'work' => $Os_appd2Work,
                 'workspec' => $Work2Workspec,
@@ -227,7 +227,7 @@ class Os_appdController extends Controller
         // 外注承認申請書更新　↑
 
         $user = Auth::user();
-        if ($user->roll === 'admin') {
+        if ($user->role === 'admin') {
             if ($request->appd1_approval === 1 || $request->appd2_approval === 1) {
                 $message = '承認しました。';
                 $status = 'success';
@@ -241,7 +241,7 @@ class Os_appdController extends Controller
                     'message' => $message,
                     'status' => $status,
                 ]);
-        } elseif ($user->roll === 'creator') {
+        } elseif ($user->role === 'creator') {
             if ($request->request_check === "true") {
                 $message = '更新しました。';
                 $status = 'success';

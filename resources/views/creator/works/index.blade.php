@@ -54,13 +54,13 @@
                                             <td rowspan="2" class="p-2"><a href="{{ route('creator.works.show', $work->id) }}" class="text-blue-500 underline">{{ $work->id }}</a></td>
                                             <td rowspan="2" class="p-2">{{ $work->work_spec_id }}</td>
                                             <td rowspan="2" class="p-2">
-                                                @if($user->roll == 'admin')
+                                                @if($user->role == 'admin')
                                                 @foreach($creators as $creator)
                                                 @if($creator->id == $work->creator_id)
                                                 <p>{{ $creator->name }}</p>
                                                 @endif
                                                 @endforeach
-                                                @elseif($user->roll == 'creator')
+                                                @elseif($user->role == 'creator')
                                                 @if($creator->id == $work->creator_id)
                                                 <p>{{ $creator->name }}</p>
                                                 @endif

@@ -87,7 +87,7 @@
                                 @csrf
                                 @method('PUT')
                                 <input id="work_id" value="$work->id" type="hidden">
-                                <input id="user_roll" value="$user->roll" type="hidden">
+                                <input id="user_roll" value="$user->role" type="hidden">
                                 <div class="p-2 w-full mx-auto overflow-auto">
                                     <p class="font-medium">情報</p>
                                     <table class="table-auto w-full text-center whitespace-no-wrap">
@@ -118,12 +118,12 @@
                                             <tr class="w-full">
                                                 <td rowspan="2" class="pe-2 py-2">
                                                     <select name="creator_id" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                                        @if($user->roll == 'admin')
+                                                        @if($user->role == 'admin')
                                                         <option selected disabled value="">選択してください</option>
                                                         @foreach($creators as $creator)
                                                         <option value="{{ $creator->id }}">{{ $creator->name }}</option>
                                                         @endforeach
-                                                        @elseif($user->roll === 'creator')
+                                                        @elseif($user->role === 'creator')
                                                         <option value="{{ $creators->id }}">{{ $creators->name }}</option>
                                                         @endif
                                                     </select>

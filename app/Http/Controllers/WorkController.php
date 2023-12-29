@@ -24,7 +24,7 @@ class WorkController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if ($user->roll === 'admin') {
+        if ($user->role === 'admin') {
             return view('admin.works.index', [
                 'works' => Work::all(),
                 'workspecs' => Workspec::all(),
@@ -33,7 +33,7 @@ class WorkController extends Controller
                 'creators' => Creator::all(),
                 'user' => $user,
             ]);
-        } elseif($user->roll === 'creator') {
+        } elseif($user->role === 'creator') {
             return view('creator.works.index', [
                 'works' => Work::where('creator_id', '=', $user->id)->get(),
                 'workspecs' => Workspec::all(),
@@ -86,7 +86,7 @@ class WorkController extends Controller
         }
         $user = Auth::user();
 
-        if($user->roll == 'admin'){
+        if($user->role == 'admin'){
             return view('admin.works.show', [
                 'work' => $work,
                 'workspec' => $Work2Workspec,
@@ -96,7 +96,7 @@ class WorkController extends Controller
                 'creator' => $creator,
                 'user' => $user,
             ]);
-        } elseif($user->roll === 'creator') {
+        } elseif($user->role === 'creator') {
             return view('creator.works.show', [
                 'work' => $work,
                 'workspec' => $Work2Workspec,
@@ -119,7 +119,7 @@ class WorkController extends Controller
     {
         $user = Auth::user();
         $work = Work::findOrFail($id);
-        if ($user->roll === 'admin') {
+        if ($user->role === 'admin') {
             $Work2Workspec = Workspec::find($work->work_spec_id);
             $Workspec2Application = Application::find($Work2Workspec->application_id);
             $Work2Os_appd = Os_appd::where('work_id', '=', $work->id)->first();
@@ -135,7 +135,7 @@ class WorkController extends Controller
                 'creators' => $creators,
                 'user' => $user,
             ]);
-        } elseif($user->roll === 'creator') {
+        } elseif($user->role === 'creator') {
             $Work2Workspec = Workspec::find($work->work_spec_id);
             $Workspec2Application = Application::find($Work2Workspec->application_id);
             $Work2Os_appd = Os_appd::where('work_id', '=', $work->id)->first();
@@ -188,11 +188,11 @@ class WorkController extends Controller
         $work->save();
 
         $user = Auth::user();
-        if ($user->roll === 'admin') {
+        if ($user->role === 'admin') {
             return redirect()
                 ->route('admin.works.index', ['work' => $request->work_id])
                 ->with(['message'=>'申請書を更新しました。', 'status'=>'info']);
-        } elseif($user->roll === 'creator') {
+        } elseif($user->role === 'creator') {
             return redirect()
                 ->route('creator.works.index', ['work' => $request->work_id])
                 ->with(['message'=>'申請書を更新しました。', 'status'=>'info']);

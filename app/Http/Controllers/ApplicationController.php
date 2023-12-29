@@ -25,10 +25,10 @@ class ApplicationController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if ($user->roll === 'user') {
+        if ($user->role === 'user') {
             $applications = Application::where('user_id', $user->id)->get();
             return view('user.applications.index', compact('user', 'applications'));
-        } elseif ($user->roll === 'admin') {
+        } elseif ($user->role === 'admin') {
             $applications = Application::all();
             return view('admin.applications.index', compact('user', 'applications'));
         }
@@ -42,9 +42,9 @@ class ApplicationController extends Controller
     public function create()
     {
         $user = Auth::user();
-        if ($user->roll === 'user') {
+        if ($user->role === 'user') {
             return view('user.applications.create', compact('user'));
-        } elseif ($user->roll === 'admin') {
+        } elseif ($user->role === 'admin') {
             return view('admin.applications.create', compact('user'));
         }
     }
@@ -72,11 +72,11 @@ class ApplicationController extends Controller
         ]);
 
         $user = Auth::user();
-        if ($user->roll === 'user') {
+        if ($user->role === 'user') {
             return redirect()
                 ->route('user.applications.index')
                 ->with(['message' => '申請書を作成しました。', 'status' => 'info']);
-        } elseif ($user->roll === 'admin') {
+        } elseif ($user->role === 'admin') {
             return redirect()
                 ->route('admin.applications.index')
                 ->with(['message' => '申請書を作成しました。', 'status' => 'info']);
@@ -104,9 +104,9 @@ class ApplicationController extends Controller
     {
         $user = Auth::user();
         $application = Application::findOrFail($id);
-        if ($user->roll === 'user') {
+        if ($user->role === 'user') {
             return view('user.applications.edit', compact('user', 'application'));
-        } elseif ($user->roll === 'admin') {
+        } elseif ($user->role === 'admin') {
             return view('admin.applications.edit', compact('user', 'application'));
         }
     }
@@ -139,11 +139,11 @@ class ApplicationController extends Controller
         $application->save();
 
         $user = Auth::user();
-        if ($user->roll === 'user') {
+        if ($user->role === 'user') {
             return redirect()
                 ->route('user.applications.index', $id)
                 ->with(['message' => '申請書を更新しました。', 'status' => 'info']);
-        } elseif ($user->roll === 'admin') {
+        } elseif ($user->role === 'admin') {
             return redirect()
                 ->route('admin.applications.index', $id)
                 ->with(['message' => '申請書を更新しました。', 'status' => 'info']);
@@ -161,11 +161,11 @@ class ApplicationController extends Controller
         Application::findOrFail($id)->forceDelete(); //物理削除
 
         $user = Auth::user();
-        if ($user->roll === 'user') {
+        if ($user->role === 'user') {
             return redirect()
                 ->route('user.applications.index')
                 ->with(['message' => '申請書を削除しました。', 'status' => 'alert']);
-        } elseif ($user->roll === 'admin') {
+        } elseif ($user->role === 'admin') {
             return redirect()
                 ->route('admin.applications.index')
                 ->with(['message' => '申請書を削除しました。', 'status' => 'alert']);
